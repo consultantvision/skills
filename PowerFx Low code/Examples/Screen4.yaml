@@ -1,0 +1,784 @@
+Screens:
+  PromptItems:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+      OnVisible: |
+        =Select(btnLoadGrid_1);
+        UpdateContext({varDoNotSubmit: false});
+    Children:
+      - ScreenContainer2_2:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =768
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =16
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =10.05
+            PaddingTop: =10.05
+            Width: |+
+              =Parent.Width
+            X: =0.00
+          Children:
+            - HeaderContainer1_1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  FillPortions: =0
+                  Height: =75
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  PaddingRight: =0.00
+                  PaddingTop: =0.00
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  Width: =835.20
+                  X: =12.80
+                Children:
+                  - TableNameLabel1_3:
+                      Control: Label@2.5.1
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledColor: =RGBA(186, 186, 186, 1)
+                        Fill: =App.Theme.Colors.Primary
+                        FillPortions: =1
+                        Font: =Font.'Lato Black'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =68
+                        PaddingBottom: =16
+                        PaddingLeft: =16
+                        PaddingRight: =10.05
+                        PaddingTop: =10.05
+                        Size: =16
+                        Text: ="Item for " & varglbTitle
+                        Width: =835.20
+                        X: =0.00
+            - FooterContainer1_1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(185, 133, 230, 1)
+                  FillPortions: =0
+                  Height: =40
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =10
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  PaddingLeft: =20
+                  PaddingRight: =0.00
+                  PaddingTop: =0.00
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  Visible: =varGridEdit
+                  Width: =835.20
+                  X: =12.80
+                Children:
+                  - btnSave:
+                      Control: Button@0.0.45
+                      Properties:
+                        OnSelect: |-
+                          =// Save NEW records to SharePoint
+                          ForAll(
+                              Filter(
+                                  colGridData,
+                                  isNew = true
+                              ) As Items,
+                              Patch(
+                                  hsa_purchasequotes,
+                                  Defaults(hsa_purchasequotes),
+                                  {
+                                      Product: Items.Product,
+                                      Productcode: Items.Itemdescription,
+                                      WebLink: Items.WebLink,
+                                      Model: Items.Model,
+                                      Size: Items.Size,
+                                      Quantity: Items.Quantity,
+                                      GUID: Items.GUID,
+                                      ParentID: {
+                                          Value: varglbTitle,
+                                          Id: Value(varglbID)
+                                      }
+                                  }
+                              )
+                          );
+                          // Update EXISTING records that were edited
+                          ForAll(
+                              Filter(
+                                  colGridData,
+                                  !isNew && isEdit
+                              ) As Items,
+                              Patch(
+                                  hsa_purchasequotes,
+                                  LookUp(
+                                      hsa_purchasequotes,
+                                      GUID = Items.GUID
+                                  ),
+                                  {
+                                      Product: Items.Product,
+                                      Productcode: Items.Itemdescription,
+                                      WebLink: Items.WebLink,
+                                      Model: Items.Model,
+                                      Size: Items.Size,
+                                      Quantity: Items.Quantity
+                                  }
+                              )
+                          );
+                          // Mark all records as saved and not in edit mode
+                          ForAll(
+                              colGridData,
+                              Patch(
+                                  colGridData,
+                                  LookUp(
+                                      colGridData,
+                                      GUID = ThisRecord.GUID
+                                  ),
+                                  {
+                                      isNew: false,
+                                      isEdit: false,
+                                      isFirstSave: false
+                                  }
+                              )
+                          );
+                          Notify(
+                              "All records saved successfully",
+                              NotificationType.Success
+                          )
+                        Text: ="Save"
+                        Visible: =false
+                        Width: =60.28
+                        X: =395.20
+                  - btnAddLineItem:
+                      Control: Button@0.0.45
+                      Properties:
+                        Align: =Align.Center
+                        DisplayMode: =//If(CountRows(colGridUpdates)=0,DisplayMode.Edit,DisplayMode.Disabled)
+                        Icon: ="Add"
+                        Layout: ='ButtonCanvas.Layout'.IconAfter
+                        OnSelect: |-
+                          =Collect(
+                              colGridData,
+                              {
+                                  Itemdescription: Blank(),
+                                  Quantity: Blank(),
+                                  Size: Blank(),
+                                  Model: Blank(),
+                                  Product: Blank(),
+                                  WebLink: Blank(),
+                                  ParentID: {
+                                      Value: varglbTitle,
+                                      Id: Value(varglbID)
+                                  },
+                                  GUID: GUID(),
+                                  isNew: true,
+                                  isEdit: true,
+                                  isFirstSave: true
+                              }
+                          );
+                          If(
+                              TaskItemsgal.AllItemsCount > 0,
+                              UpdateContext({varDoNotSubmit: true}),
+                              UpdateContext({varDoNotSubmit: false})
+                          )
+                        Text: ="Add New Line Item"
+                        Visible: |+
+                          =varGridEdit
+
+                        Width: =180
+                        X: =464
+                  - btnLoadGrid_1:
+                      Control: Button@0.0.45
+                      Properties:
+                        OnSelect: |-
+                          =ClearCollect(
+                              colGridData,
+                              Filter(
+                                  hsa_purchasequotes,
+                                  ParentID.Value = varglbTitle //And ParentID.Id = frmPurchaserqst3.LastSubmit.ID)
+                              )
+                          );
+                          /*
+                          Clear(colGridUpdates);
+                          Set(
+                              varReset,
+                              false
+                          );
+                          Set(
+                              varReset,
+                              true
+                          );
+                          */
+                        Visible: =false
+                        Width: =60.28
+                        X: =0.00
+            - MainContainer2_3:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(214, 221, 224, 1)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMaxWidth: =0
+                  LayoutOverflowX: =LayoutOverflow.Scroll
+                  LayoutWrap: =true
+                  PaddingRight: =0.00
+                  PaddingTop: =0.00
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  Width: =Parent.Width
+                  X: =12.80
+                Children:
+                  - Container1_1:
+                      Control: GroupContainer@1.3.0
+                      Variant: ManualLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.End
+                        Fill: =App.Theme.Colors.Lighter60
+                        FillPortions: =0
+                        Height: =40
+                        PaddingRight: =0.00
+                        PaddingTop: =0.00
+                        Width: =Parent.Width
+                        X: =-2.40
+                      Children:
+                        - hrdItemCost:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Center
+                              Font: =Font.'Lato Black'
+                              Text: ="Size"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Width: =66.56
+                              X: =1001
+                        - hdrQty:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Center
+                              Font: =Font.'Lato Black'
+                              Text: ="Quantity"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Width: =60.28
+                              X: =1158
+                              Y: =4
+                        - hrdProduct:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Center
+                              Font: =Font.'Lato Black'
+                              Height: =24
+                              Text: ="Product"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Width: =195
+                              Y: =8
+                        - hdrModel:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Center
+                              Font: =Font.'Lato Black'
+                              Height: =40
+                              Text: ="Product Code"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Width: =162
+                              X: =291
+                        - hdrWeblink:
+                            Control: Text@0.0.51
+                            Properties:
+                              Align: ='TextCanvas.Align'.Center
+                              Font: =Font.'Lato Black'
+                              Text: ="Web Link"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Width: =162
+                              X: =697
+                              Y: =4
+                  - TaskItemsgal:
+                      Control: Gallery@2.15.0
+                      Variant: Vertical
+                      Properties:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        BorderThickness: =1
+                        DisplayMode: |+
+                          =If(
+                              varGridEdit,
+                              DisplayMode.Edit,
+                              DisplayMode.View)
+
+                        Height: =500
+                        Items: =colGridData
+                        LayoutMaxWidth: =1400
+                        LayoutMinHeight: =200
+                        LayoutMinWidth: =1000
+                        TemplateSize: =40
+                        Width: |
+                          =Parent.Width
+                        X: =-2.40
+                      Children:
+                        - numQuantity:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Align: =Align.Right
+                              Appearance: ='TextInputCanvas.Appearance'.Outline
+                              BasePaletteColor: =RGBA(168, 110, 235, 1)
+                              DisplayMode: =If(ThisItem.isEdit, DisplayMode.Edit, DisplayMode.View)
+                              Fill: =RGBA(201, 220, 242, 1)
+                              Height: =36
+                              OnChange: =Select(btnUpdate_1)
+                              Value: =ThisItem.Quantity
+                              Width: =70
+                              X: =1155
+                        - txtSize:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Appearance: ='TextInputCanvas.Appearance'.Outline
+                              BasePaletteColor: =RGBA(168, 110, 235, 1)
+                              DisplayMode: =If(ThisItem.isEdit, DisplayMode.Edit, DisplayMode.View)
+                              Fill: =RGBA(201, 220, 242, 1)
+                              Height: =36
+                              OnChange: =Select(btnUpdate_1)
+                              Value: =ThisItem.Size
+                              Width: =190
+                              X: =949
+                        - txtWeblink:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Appearance: ='TextInputCanvas.Appearance'.Outline
+                              BasePaletteColor: =RGBA(168, 110, 235, 1)
+                              DisplayMode: =If(ThisItem.isEdit, DisplayMode.Edit, DisplayMode.View)
+                              Fill: =RGBA(201, 220, 242, 1)
+                              Height: =36
+                              OnChange: =Select(btnUpdate_1)
+                              Value: =ThisItem.WebLink
+                              Width: =350
+                              X: =584
+                        - txtProductcode:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Appearance: ='TextInputCanvas.Appearance'.Outline
+                              BasePaletteColor: =RGBA(168, 110, 235, 1)
+                              DisplayMode: =If(ThisItem.isEdit, DisplayMode.Edit, DisplayMode.View)
+                              Fill: =RGBA(201, 220, 242, 1)
+                              Height: =36
+                              OnChange: =Select(btnUpdate_1)
+                              Value: =ThisItem.Productcode
+                              Width: =342
+                              X: =218
+                        - txtProduct:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Appearance: ='TextInputCanvas.Appearance'.Outline
+                              BasePaletteColor: =RGBA(168, 110, 235, 1)
+                              DisplayMode: =If(ThisItem.isEdit, DisplayMode.Edit, DisplayMode.View)
+                              Fill: =RGBA(201, 220, 242, 1)
+                              Height: =36
+                              OnChange: =Select(btnUpdate_1)
+                              Value: =ThisItem.Product
+                              Width: =199
+                              X: =3
+                        - icnEdit:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              Height: =30
+                              Icon: =Icon.Edit
+                              OnSelect: |-
+                                =Patch(
+                                    colGridData,
+                                    LookUp(
+                                        colGridData,
+                                        GUID = ThisItem.GUID
+                                    ),
+                                    {isEdit: true}
+                                )
+                              PaddingBottom: =5
+                              PaddingLeft: =5
+                              PaddingRight: =5
+                              PaddingTop: =5
+                              Tooltip: ="Edit current line item"
+                              Visible: =!ThisItem.isEdit And varGridEdit
+                              Width: =30
+                              X: =1240
+                              Y: =5
+                        - icnSave:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              DisabledColor: =RGBA(224, 86, 6, 1)
+                              DisplayMode: |-
+                                =//If((IsBlank(txtProduct.Value)||IsBlank(txtProductcode.Value)||IsBlank(txtSize.Value)||IsBlank(txtWeblink.Value)||IsBlank(numQuantity.Value)),DisplayMode.Disabled,DisplayMode.Edit)
+                                If(fmIsRecordBlank,DisplayMode.View,DisplayMode.Edit)
+                              Height: =30
+                              Icon: =Icon.Save
+                              OnSelect: |-
+                                =// Save or update this specific row
+                                If(
+                                    ThisItem.isNew,
+                                    // Create new record
+                                    Patch(
+                                        hsa_purchasequotes,
+                                        Defaults(hsa_purchasequotes),
+                                        {
+                                            Product: txtProduct.Value,
+                                            Productcode: txtProductcode.Value,
+                                            WebLink: txtWeblink.Value,
+                                            Size: txtSize.Value,
+                                            Quantity: Value(numQuantity.Value),
+                                            GUID: ThisItem.GUID,
+                                            ParentID: {
+                                                Value: PurchaseTitle.Value,
+                                                Id: Value(dtID.Value)
+                                            }
+                                        }
+                                    ),
+                                    // Update existing record
+                                    Patch(
+                                        hsa_purchasequotes,
+                                        LookUp(
+                                            hsa_purchasequotes,
+                                            GUID = ThisItem.GUID
+                                        ),
+                                        {
+                                            Productcode: txtProductcode.Value,
+                                            Product: txtProduct.Value,
+                                            WebLink: txtWeblink.Value,
+                                            Quantity: Value(numQuantity.Value),
+                                            Size: txtSize.Value,
+                                            ParentID: {
+                                                Value: PurchaseTitle.Value,
+                                                Id: Value(dtID.Value)
+                                            }
+                                        }
+                                    )
+                                );
+                                // Update collection
+                                Patch(
+                                    colGridData,
+                                    LookUp(
+                                        colGridData,
+                                        GUID = ThisItem.GUID
+                                    ),
+                                    {
+                                        Productcode: txtProductcode.Value,
+                                        Product: txtProduct.Value,
+                                        WebLink: txtWeblink.Value,
+                                        Quantity: Value(numQuantity.Value),
+                                        Size: txtSize.Value,
+                                        isNew: false,
+                                        isEdit: false
+                                    }
+                                );
+
+                                UpdateContext(
+                                    {varDoNotSubmit: true};
+                                    {IsGridRecord: CountRows(colGridData)}
+                                );
+                                Notify(
+                                    "Record item saved ✔️",
+                                    NotificationType.Success,
+                                    900
+                                )
+                              PaddingBottom: =5
+                              PaddingLeft: =5
+                              PaddingRight: =5
+                              PaddingTop: =5
+                              Tooltip: ="Save current Item"
+                              Visible: =ThisItem.isEdit
+                              Width: =30
+                              X: =1240
+                              Y: =5
+                        - icnCancel:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              DisabledBorderColor: =RGBA(9, 33, 98, 1)
+                              DisabledColor: =RGBA(255, 0, 0, 1)
+                              DisplayMode: |-
+                                =If(
+                                    IsBlank(ThisItem.Product),
+                                    DisplayMode.Edit,
+                                    DisplayMode.Disabled
+                                )
+                              Height: =30
+                              Icon: =Icon.Cancel
+                              OnSelect: |-
+                                =// If it's a NEW record that was never saved, remove it from collection
+                                If(
+                                    ThisItem.isNew && ThisItem.isFirstSave,
+                                    Remove(
+                                        colGridData,
+                                        ThisItem
+                                    ),
+                                    // If it's an existing record being edited, revert changes
+                                    If(
+                                        !ThisItem.isNew,
+                                        Patch(
+                                            colGridData,
+                                            LookUp(
+                                                colGridData,
+                                                GUID = ThisItem.GUID
+                                            ),
+                                            LookUp(
+                                                hsa_purchasequotes,
+                                                GUID = ThisItem.GUID
+                                            )
+                                        )
+                                    );
+                                    // Turn off edit mode
+                                Patch(
+                                        colGridData,
+                                        LookUp(
+                                            colGridData,
+                                            GUID = ThisItem.GUID
+                                        ),
+                                        {isEdit: false}
+                                    )
+                                );
+                                Notify(
+                                    "Cancelled",
+                                    NotificationType.Warning,
+                                    800
+                                )
+                              PaddingBottom: =5
+                              PaddingLeft: =5
+                              PaddingRight: =5
+                              PaddingTop: =5
+                              Tooltip: ="Reset Line item"
+                              Visible: =varGridEdit
+                              Width: =30
+                              X: =1270
+                              Y: =5
+                        - icnDel:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              DisabledColor: =RGBA(255, 0, 0, 1)
+                              DisplayMode: |-
+                                =//icnSave.DisplayMode
+                                If(
+                                    IsBlank(ThisItem.Product),
+                                    DisplayMode.Disabled,
+                                    DisplayMode.Edit
+                                )
+                              Height: =30
+                              Icon: =Icon.Trash
+                              OnSelect: |-
+                                =// Delete from SharePoint if already saved
+                                If(
+                                    !ThisItem.isNew,
+                                    Remove(
+                                        hsa_purchasequotes,
+                                        LookUp(
+                                            hsa_purchasequotes,
+                                            GUID = ThisItem.GUID
+                                        )
+                                    )
+                                );
+                                // Remove from collection
+                                Remove(
+                                    colGridData,
+                                    ThisItem
+                                );
+                                UpdateContext({varDoNotSubmit: true});
+                                Notify(
+                                    "Record deleted",
+                                    NotificationType.Success,
+                                    1000
+                                )
+                              PaddingBottom: =5
+                              PaddingLeft: =5
+                              PaddingRight: =5
+                              PaddingTop: =5
+                              Tooltip: ="Delete the current item"
+                              Visible: =varGridEdit
+                              Width: =30
+                              X: =1300
+                              Y: =5
+                        - btnUpdate_1:
+                            Control: Button@0.0.45
+                            Properties:
+                              OnSelect: "=/*If(\n    IsBlank(\n        LookUp(\n            colGridUpdates,\n            ID = ThisItem.ID\n        )\n    ),\n    Collect(\n        colGridUpdates,\n        ThisItem\n    )\n);\nUpdateIf(\n    colGridUpdates,\n    ID = ThisItem.ID,\n    {\n        \n        Quantity: Value(numQuantity.Value),\n        Size: Value(txtSize.Value),\n        Product: txtProduct.Value,\n        Model: txtModel.Value,\n        WebLink: txtWeblink.Value\n    }\n)*/"
+                              Visible: =false
+                              Width: =20
+                              X: =3
+                  - FooterContainer1_2:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =0
+                        Height: =40
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =10
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        PaddingLeft: =20
+                        PaddingRight: =0.00
+                        PaddingTop: =0.00
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Width: =Parent.Width
+                        X: =0.00
+                      Children:
+                        - btBack_1:
+                            Control: Button@0.0.45
+                            Properties:
+                              Appearance: ='ButtonCanvas.Appearance'.Secondary
+                              OnSelect: |
+                                =Set(
+                                    varGridEdit,
+                                    false
+                                );
+                                Set(
+                                    varBackbtnGrid,
+                                    true
+                                );
+                                Set(
+                                    isGridEmpty,
+                                    If(
+                                        TaskItemsgal.AllItemsCount = 0 Or fmIsRecordBlank,
+                                        true,
+                                        false
+                                    )
+                                );
+                                Back();
+                              Text: ="Back"
+                              Width: =60.28
+                              X: =327.2
+                        - btnSubmit_1:
+                            Control: Button@0.0.45
+                            Properties:
+                              AccessibleLabel: ="Submit form button"
+                              AlignInContainer: =AlignInContainer.Center
+                              DisplayMode: |-
+                                =If(
+                                    TaskItemsgal.AllItemsCount <> 0,
+                                    DisplayMode.Edit,
+                                    DisplayMode.View
+                                )
+                              Font: =Font.'Lato Black'
+                              Icon: ="CheckmarkCircle"
+                              OnSelect: |-
+                                =UpdateContext({varDelConfirm: true})
+                              Text: ="Submit"
+                              Visible: =varGridEdit
+                              Width: =120
+                        - Label2:
+                            Control: Label@2.5.1
+                            Properties:
+                              LayoutMaxHeight: =0
+                              LayoutMaxWidth: =0
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              Text: |-
+                                =TaskItemsgal.AllItemsCount & " : item in grid"
+      - Container2:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(169,169,169,.55)
+            Height: =Parent.Height
+            Visible: =varDelConfirm
+            Width: =1366
+          Children:
+            - conConfirmSubmit:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =492
+                  RadiusBottomLeft: =25
+                  RadiusBottomRight: =25
+                  RadiusTopLeft: =25
+                  RadiusTopRight: =25
+                  Visible: =varDelConfirm
+                  Width: =900
+                  X: =272
+                  Y: =132
+                Children:
+                  - Label6:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        DisplayMode: =DisplayMode.View
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =291
+                        Size: =40
+                        Text: |-
+                          =If(
+                              fmIsRecordBlank,
+                              "Your current record entry is blank or not completed !",
+                              "Do you want to submit this record?"
+                          )
+                        Width: =540
+                        X: =180
+                        Y: =56
+                  - btSubmitpogrid:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        DisplayMode: =If(fmIsRecordBlank,DisplayMode.Disabled,DisplayMode.Edit)
+                        Fill: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: |-
+                          =Set(
+                              varApproverEmail,
+                              If(
+                                  tgIsMedical.Checked = true,
+                                  Coalesce(
+                                      First(First(MedicalApprover).Approver).Email,
+                                      ""
+                                  ),
+                                  First(varApprover).Approver.Email
+                              )
+                          );
+                          ProcFormEmailresponsev3.Run(
+                              tbMenu.Selected.ID,
+                              frmPurchaserqst3.LastSubmit.ID
+                          );
+                          ResetForm(frmPurchaserqst3);
+                          NewForm(frmPurchaserqst3);
+                          UpdateContext({varDelConfirm: false});
+                          Notify(
+                              "[VIA GRID] You have successfully saved current Purchase record [" & frmPurchaserqst3.LastSubmit.ID & "] ☑️",
+                              NotificationType.Warning,
+                              800
+                          );
+                          UpdateContext({locTab: {Value: "Purchase Request 💻"}});
+                          Navigate('Home Screen')
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Text: ="Yes, Submit"
+                        X: =160
+                        Y: =368
+                  - btcancelpogrid:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Self.Fill, -15%)
+                        Color: =RGBA(0, 0, 0, 1)
+                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                        Fill: =RGBA(204, 231, 246, 1)
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                        HoverColor: =RGBA(255, 255, 255, 1)
+                        HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        OnSelect: =UpdateContext({varDelConfirm:false})
+                        PressedBorderColor: =Self.Fill
+                        PressedColor: =Self.Fill
+                        PressedFill: =Self.Color
+                        Text: ="No, Go Back"
+                        X: =560
+                        Y: =368
