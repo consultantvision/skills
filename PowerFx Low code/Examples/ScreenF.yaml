@@ -1,0 +1,2178 @@
+Screens:
+  EditProcRequest:
+    Properties:
+      OnVisible: |-
+        =Set(
+            varMenuID,
+            1
+        );
+        ClearCollect(
+            colGridData,
+            Filter(
+                hsa_purchasequote,
+                ParentID.Value = tblProcurement.Selected.Title
+            )
+        );
+    Children:
+      - cntMain:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =16
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - hdrcnt:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  FillPortions: =0
+                  Height: =75
+                  LayoutDirection: =LayoutDirection.Horizontal
+                Children:
+                  - Header3_6:
+                      Control: Header@0.0.44
+                      Properties:
+                        Logo: =psa_second2
+                        OnSelectLogo: =Navigate(HomeScreen)
+                        Title: '="Purchase Request Admin " '
+            - btmcnt:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(245, 245, 245, 1)
+                  FillPortions: =0
+                  Height: =LeftNav_11.Height
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =16
+                  LayoutWrap: =true
+                  PaddingBottom: =2
+                  PaddingLeft: =2
+                  PaddingRight: =2
+                  PaddingTop: =2
+                Children:
+                  - sdcntLeftNav:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =0
+                        Height: =LeftNav_11.Height
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =100
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =LeftNav_11.Width
+                      Children:
+                        - LeftNav_11:
+                            Control: CanvasComponent
+                            ComponentName: LeftNav
+                            Properties:
+                              Height: =App.DesignHeight - 125
+                              Width: =If(varMenuOpen,200,80)
+                  - mncntFrm:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FillPortions: =7
+                        LayoutDirection: =LayoutDirection.Vertical
+                      Children:
+                        - cntTabmenu:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(214, 221, 224, 1)
+                              FillPortions: =0
+                              Height: =50
+                              LayoutDirection: =LayoutDirection.Vertical
+                            Children:
+                              - tbadmin_3:
+                                  Control: TabList@2.2.31
+                                  Properties:
+                                    AccessibleLabel: ="Purchase"
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    Alignment: ='TabList.Alignment'.Horizontal
+                                    BasePaletteColor: =RGBA(168, 110, 235, 1)
+                                    DefaultSelectedItems: =["Purchase Request"]
+                                    FillPortions: =1
+                                    Font: =Font.'Segoe UI'
+                                    FontColor: =RGBA(109, 49, 162, 1)
+                                    FontSize: =20
+                                    FontWeight: =FontWeight.Semibold
+                                    Items: =["Purchase Request", "Purchase Admin","Items table"]
+                                    LayoutMinWidth: =350
+                                    OnSelect: =true
+                                    Size: ='TabList.Size'.Small
+                                    Width: =350
+                                  Children:
+                                    - Value2_2:
+                                        Control: TabListDataField@1.5.0
+                                        Variant: textualColumn
+                                        IsLocked: true
+                                        Properties:
+                                          FieldDisplayName: ="Value"
+                                          FieldName: ="Value"
+                                          FieldType: ="s"
+                                          Order: =1
+                        - Container4:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              Height: =Parent.Height
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutMaxHeight: =0
+                              LayoutMaxWidth: =0
+                              LayoutMinHeight: =16
+                              LayoutMinWidth: =16
+                              Visible: =tbadmin_3.Selected.Value = "Purchase Admin" Or tbadmin_3.Selected.Value = "Purchase Request"
+                              Width: =Parent.Width
+                              X: =40
+                              Y: =40
+                            Children:
+                              - Form_Purchase:
+                                  Control: Form@2.4.4
+                                  Layout: Vertical
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    DataSource: =hsa_purchaserequestList_1
+                                    DefaultMode: =varFormMode
+                                    Fill: =RGBA(174, 208, 221, 1)
+                                    Item: =tblProcurement.Selected
+                                    LayoutMaxHeight: =0
+                                    LayoutMaxWidth: =0
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    NumberOfColumns: =2
+                                    OnSuccess: |-
+                                      =If(
+                                          tgSendMsg_2.Checked = true,
+                                          ProcadminEmailresponse.Run(
+                                              varMenuID,
+                                              tblProcurement.Selected.ID,
+                                              tblProcurement.Selected.'Created By'.Email
+                                          );
+                                          UpdateContext({vMsg: " - An update has been sent to the requestor"})
+                                      );
+                                      Notify(
+                                          "Records has been update " & vMsg,
+                                          NotificationType.Success,
+                                          800
+                                      );
+                                      UpdateContext({vMsg: Blank()});
+                                      ResetForm(Form_Purchase);
+                                      Navigate(ProcurRequestMain)
+                                    Width: |+
+                                      =Min(1250,Parent.Width)
+                                  Children:
+                                    - ID_DataCard5:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualView
+                                        IsLocked: true
+                                        Properties:
+                                          DataField: ="ID"
+                                          Default: =ThisItem.ID
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,ID)
+                                          Required: =false
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request"
+                                          Width: =600
+                                          X: =0
+                                          Y: =0
+                                        Children:
+                                          - DataCardKey69:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - dtID1:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =DisplayMode.View
+                                                Height: =34
+                                                Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =110
+                                                X: =24
+                                                Y: =DataCardKey69.Y + DataCardKey69.Height + 4
+                                    - IndividualCarePlane_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ToggleEdit
+                                        Properties:
+                                          DataField: ="IndividualCarePlane"
+                                          Default: =ThisItem.IndividualCarePlane
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,IndividualCarePlane)
+                                          Required: =false
+                                          Update: =dtrdIndCareplan1.Checked
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request"
+                                          Width: =600
+                                          X: =1
+                                          Y: =0
+                                        Children:
+                                          - DataCardKey70:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: ="Is this request required for an individual's care plan?"
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - dtrdIndCareplan1:
+                                              Control: Toggle@1.1.5
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =If(Parent.Required, Substitute("{0}. Required.", "{0}", Parent.DisplayName), Parent.DisplayName)
+                                                Checked: =Parent.Default
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =32
+                                                Label: =""
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey70.Y + DataCardKey70.Height + 4
+                                          - ErrorMessage59:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =dtrdIndCareplan1.Y + dtrdIndCareplan1.Height
+                                          - StarVisible59:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey70.Y
+                                    - Title_DataCard4:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualEdit
+                                        Properties:
+                                          DataField: ="Title"
+                                          Default: =ThisItem.Title
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Title)
+                                          MaxLength: =DataSourceInfo([@hsa_purchaserequestList_1], DataSourceInfo.MaxLength, Title)
+                                          Required: =false
+                                          Update: =dtTitle.Value
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request"
+                                          Width: =600
+                                          X: =0
+                                          Y: =1
+                                        Children:
+                                          - DataCardKey72:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: ="Purchase Item"
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - dtTitle:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Mode: ='TextInputCanvas.Mode'.SingleLine
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey72.Y + DataCardKey72.Height + 4
+                                          - ErrorMessage61:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =dtTitle.Y + dtTitle.Height
+                                          - StarVisible61:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey72.Y
+                                    - ServiceID_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualEdit
+                                        Properties:
+                                          DataField: ="ServiceID"
+                                          Default: =ThisItem.ServiceID
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,ServiceID)
+                                          MaxLength: =DataSourceInfo([@hsa_purchaserequestList_1], DataSourceInfo.MaxLength, ServiceID)
+                                          Required: =false
+                                          Update: =dtServiceID.Value
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request" And If(dtrdIndCareplan1.Checked=false,false,true)
+                                          Width: =600
+                                          X: =1
+                                          Y: =1
+                                        Children:
+                                          - DataCardKey71:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: ="Service ID"
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - dtServiceID:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey71.Y + DataCardKey71.Height + 4
+                                          - ErrorMessage60:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =dtServiceID.Y + dtServiceID.Height
+                                          - StarVisible60:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey71.Y
+                                    - Detainee Name_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualEdit
+                                        IsLocked: true
+                                        Properties:
+                                          DataField: ="Detainee_x0020_Name"
+                                          Default: =ThisItem.'Detainee Name'
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,'Detainee Name')
+                                          MaxLength: =DataSourceInfo([@hsa_purchaserequestList_1], DataSourceInfo.MaxLength, 'Detainee Name')
+                                          Required: =false
+                                          Update: =DataCardValue67.Value
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request" And dtrdIndCareplan1.Checked = true
+                                          Width: =600
+                                          X: =0
+                                          Y: =2
+                                        Children:
+                                          - DataCardKey73:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue67:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey73.Y + DataCardKey73.Height + 4
+                                          - ErrorMessage62:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue67.Y + DataCardValue67.Height
+                                          - StarVisible62:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey73.Y
+                                    - Category_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        Properties:
+                                          DataField: ="Category"
+                                          Default: =ThisItem.Category
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Category)
+                                          Required: =false
+                                          Update: =DataCardValue68.Selected
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request"
+                                          Width: =600
+                                          X: =1
+                                          Y: =2
+                                        Children:
+                                          - DataCardKey74:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue68:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =DisplayMode.View
+                                                Items: =Choices([@hsa_purchaserequestList_1].Category)
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey74.Y + DataCardKey74.Height + 4
+                                              Children:
+                                                - Value1:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Value"
+                                                      FieldName: ="Value"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                          - ErrorMessage63:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue68.Y + DataCardValue68.Height
+                                          - StarVisible63:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey74.Y
+                                    - Urgency_DataCard4:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ToggleEdit
+                                        IsLocked: true
+                                        Properties:
+                                          DataField: ="Urgency"
+                                          Default: =ThisItem.Urgency
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Urgency)
+                                          Required: =false
+                                          Update: =DataCardValue69.Checked
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request"
+                                          Width: =600
+                                          X: =0
+                                          Y: =3
+                                        Children:
+                                          - DataCardKey75:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue69:
+                                              Control: Toggle@1.1.5
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =If(Parent.Required, Substitute("{0}. Required.", "{0}", Parent.DisplayName), Parent.DisplayName)
+                                                Checked: =Parent.Default
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =32
+                                                Label: =""
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey75.Y + DataCardKey75.Height + 4
+                                          - ErrorMessage64:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue69.Y + DataCardValue69.Height
+                                          - StarVisible64:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey75.Y
+                                    - Locations_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        Properties:
+                                          DataField: ="Locations"
+                                          Default: =ThisItem.Locations
+                                          DisplayMode: =DisplayMode.View
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Locations)
+                                          Required: =false
+                                          Update: =DataCardValue72.Selected
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request"
+                                          Width: =600
+                                          X: =1
+                                          Y: =3
+                                        Children:
+                                          - DataCardKey78:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue72:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =Parent.DisplayMode
+                                                Items: =Choices([@hsa_purchaserequestList_1].Locations)
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey78.Y + DataCardKey78.Height + 4
+                                              Children:
+                                                - Value3:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Value"
+                                                      FieldName: ="Value"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                          - ErrorMessage66:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue72.Y + DataCardValue72.Height
+                                          - StarVisible66:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey78.Y
+                                    - LongDescription_DataCard3:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualMultilineEdit
+                                        Properties:
+                                          DataField: ="LongDescription"
+                                          Default: =ThisItem.LongDescription
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,LongDescription)
+                                          Required: =false
+                                          Update: =DataCardValue73.Value
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request"
+                                          Width: =600
+                                          X: =0
+                                          Y: =4
+                                        Children:
+                                          - DataCardKey79:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: ="Description"
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue73:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =144
+                                                Mode: ='TextInputCanvas.Mode'.Multiline
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey79.Y + DataCardKey79.Height + 4
+                                          - ErrorMessage67:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue73.Y + DataCardValue73.Height
+                                          - StarVisible67:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey79.Y
+                                    - Created_DataCard5:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualView
+                                        IsLocked: true
+                                        Properties:
+                                          DataField: ="Created"
+                                          Default: =ThisItem.Created
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Created)
+                                          Required: =false
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request"
+                                          Width: =600
+                                          X: =1
+                                          Y: =4
+                                        Children:
+                                          - DataCardKey81:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue75:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =DisplayMode.View
+                                                Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey81.Y + DataCardKey81.Height + 4
+                                    - Created By_DataCard4:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxView
+                                        IsLocked: true
+                                        Properties:
+                                          DataField: ="Author"
+                                          Default: =ThisItem.'Created By'
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,'Created By')
+                                          Required: =false
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request"
+                                          Width: =600
+                                          X: =0
+                                          Y: =5
+                                        Children:
+                                          - DataCardKey77:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue71:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =DisplayMode.View
+                                                Items: =Choices([@hsa_purchaserequestList_1].'Created By')
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey77.Y + DataCardKey77.Height + 4
+                                              Children:
+                                                - DisplayName8:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="DisplayName"
+                                                      FieldName: ="DisplayName"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                    - Attachments_DataCard3:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ClassicAttachmentsEdit
+                                        IsLocked: true
+                                        Properties:
+                                          DataField: ="{Attachments}"
+                                          Default: =ThisItem.Attachments
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Attachments)
+                                          Required: =false
+                                          Update: =DataCardValue74.Attachments
+                                          Visible: =tbadmin_3.Selected.Value="Purchase Request"
+                                          Width: =600
+                                          X: =1
+                                          Y: =5
+                                        Children:
+                                          - DataCardKey80:
+                                              Control: Label@2.5.1
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =App.Theme.Colors.Darker30
+                                                Height: =34
+                                                Text: =Parent.DisplayName
+                                                Width: =Parent.Width - 60
+                                                Wrap: =false
+                                                X: =30
+                                                Y: =10
+                                          - DataCardValue74:
+                                              Control: Attachments@2.3.0
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =110
+                                                Items: =Parent.Default
+                                                PaddingBottom: =5
+                                                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                                                PaddingRight: =5
+                                                PaddingTop: =5
+                                                Tooltip: =Parent.DisplayName
+                                                Width: =Parent.Width - 60
+                                                X: =30
+                                                Y: =DataCardKey80.Y + DataCardKey80.Height + 5
+                                          - ErrorMessage68:
+                                              Control: Label@2.5.1
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =RGBA(168, 0, 0, 1)
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =10
+                                                Live: =Live.Assertive
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =14
+                                                Text: =Parent.Error
+                                                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                                Width: =Parent.Width - 60
+                                                X: =30
+                                                Y: =DataCardValue74.Y + DataCardValue74.Height
+                                          - StarVisible68:
+                                              Control: Label@2.5.1
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: =Align.Center
+                                                BorderColor: =RGBA(0, 0, 0, 1)
+                                                Color: =App.Theme.Colors.Darker30
+                                                Height: =DataCardKey80.Height
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Wrap: =false
+                                                Y: =DataCardKey80.Y
+                                    - Supplier_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        IsLocked: true
+                                        Properties:
+                                          DataField: ="Supplier"
+                                          Default: =ThisItem.Supplier
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Supplier)
+                                          Required: =false
+                                          Update: =DataCardValue76.Selected
+                                          Visible: =tbadmin_3.Selected.Value = "Purchase Admin"
+                                          Width: =617
+                                          X: =0
+                                          Y: =6
+                                        Children:
+                                          - DataCardKey82:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue76:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =Parent.DisplayMode
+                                                Items: =Choices([@hsa_purchaserequestList_1].Supplier)
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey82.Y + DataCardKey82.Height + 4
+                                              Children:
+                                                - Value4:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Value"
+                                                      FieldName: ="Value"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                          - ErrorMessage69:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue76.Y + DataCardValue76.Height
+                                          - StarVisible69:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey82.Y
+                                    - Cost_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: NumberEdit
+                                        Properties:
+                                          DataField: ="Cost"
+                                          Default: =ThisItem.Cost
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Cost)
+                                          Required: =false
+                                          Update: =Value(dtTotalCost.Value)
+                                          Visible: =tbadmin_3.Selected.Value = "Purchase Admin"
+                                          Width: =617
+                                          X: =1
+                                          Y: =6
+                                        Children:
+                                          - DataCardKey83:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - dtTotalCost:
+                                              Control: NumberInput@2.9.12
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                Align: =Align.Left
+                                                DisplayMode: =DisplayMode.View
+                                                Height: =38
+                                                Max: =Blank()
+                                                Min: =Blank()
+                                                OnChange: =
+                                                Precision: ='NumberInput.Precision'.'2'
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Visible: =false
+                                                Width: =105
+                                                X: =24
+                                                Y: =32
+                                          - ErrorMessage70:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =dtTotalCost.Y + dtTotalCost.Height
+                                          - StarVisible70:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey83.Y
+                                          - TextCanvas1:
+                                              Control: Text@0.0.51
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.End
+                                                Fill: =RGBA(255, 255, 255, 1)
+                                                Height: =38
+                                                PaddingBottom: =5
+                                                PaddingRight: =15
+                                                PaddingTop: =5
+                                                Text: |-
+                                                  =If(
+                                                      IsBlank(varTotalCost),
+                                                      Text(
+                                                          dtTotalCost.Value,
+                                                          "[$-en-US]$#,##0.00","en"
+                                                      ),
+                                                      Text(
+                                                          varTotalCost,
+                                                          "[$-en-US]$#,##0.00"
+                                                      )
+                                                  )
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Width: =568
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =32
+                                    - Assignto_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        Properties:
+                                          DataField: ="Assignto"
+                                          Default: =ThisItem.Assignto
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,'Assignto')
+                                          Required: =false
+                                          Update: =DataCardValue2.Selected
+                                          Visible: =tbadmin_3.Selected.Value = "Purchase Admin"
+                                          Width: =617
+                                          X: =0
+                                          Y: =7
+                                        Children:
+                                          - DataCardKey2:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: ="Assign to"
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue2:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =Parent.DisplayMode
+                                                Items: =Choices([@hsa_purchaserequestList_1].'Assignto')
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey2.Y + DataCardKey2.Height + 4
+                                              Children:
+                                                - DisplayName1:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="DisplayName"
+                                                      FieldName: ="DisplayName"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                          - ErrorMessage2:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue2.Y + DataCardValue2.Height
+                                          - StarVisible2:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey2.Y
+                                    - MethodOfPayment_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        Properties:
+                                          DataField: ="MethodOfPayment"
+                                          Default: =ThisItem.MethodOfPayment
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,MethodOfPayment)
+                                          Required: =false
+                                          Update: =DataCardValue79.Selected
+                                          Visible: =tbadmin_3.Selected.Value = "Purchase Admin"
+                                          Width: =617
+                                          X: =1
+                                          Y: =7
+                                        Children:
+                                          - DataCardKey85:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: ="Method of Payment"
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue79:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =Parent.DisplayMode
+                                                Items: =Choices([@hsa_purchaserequestList_1].MethodOfPayment)
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey85.Y + DataCardKey85.Height + 4
+                                              Children:
+                                                - Value5:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Value"
+                                                      FieldName: ="Value"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                          - ErrorMessage72:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue79.Y + DataCardValue79.Height
+                                          - StarVisible72:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey85.Y
+                                    - Purchaseorderno_DataCard2:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualEdit
+                                        Properties:
+                                          DataField: ="Purchaseorderno"
+                                          Default: =ThisItem.Purchaseorderno
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Purchaseorderno)
+                                          MaxLength: =DataSourceInfo([@hsa_purchaserequestList_1], DataSourceInfo.MaxLength, Purchaseorderno)
+                                          Required: =false
+                                          Update: =DataCardValue80.Value
+                                          Visible: =tbadmin_3.Selected.Value = "Purchase Admin"
+                                          Width: =617
+                                          X: =0
+                                          Y: =8
+                                        Children:
+                                          - DataCardKey86:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: ="Purchase Order number"
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue80:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey86.Y + DataCardKey86.Height + 4
+                                          - ErrorMessage73:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue80.Y + DataCardValue80.Height
+                                          - StarVisible73:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey86.Y
+                                    - DeliveryDate_DataCard3:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: DateEdit
+                                        Properties:
+                                          DataField: ="DeliveryDate"
+                                          Default: =ThisItem.DeliveryDate
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,DeliveryDate)
+                                          Required: =false
+                                          Update: =DataCardValue81.SelectedDate
+                                          Visible: =tbadmin_3.Selected.Value = "Purchase Admin"
+                                          Width: =617
+                                          X: =1
+                                          Y: =8
+                                        Children:
+                                          - DataCardKey87:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: ="Delivery Date"
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue81:
+                                              Control: DatePicker@0.0.46
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                EndDate: =Date(Year(Today())+100, 12, 31)
+                                                SelectedDate: =Parent.Default
+                                                StartDate: =Date(1900, 1, 1)
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey87.Y + DataCardKey87.Height + 4
+                                          - ErrorMessage74:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue81.Y + DataCardValue81.Height
+                                          - StarVisible74:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey87.Y
+                                    - Approver response_DataCard3:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualMultilineEdit
+                                        Properties:
+                                          DataField: ="Approver_x0020_response"
+                                          Default: =ThisItem.'Approver response'
+                                          DisplayMode: =DisplayMode.View
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,'Approver response')
+                                          Required: =false
+                                          Update: =DataCardValue87.Value
+                                          Visible: =tbadmin_3.Selected.Value = "Purchase Admin"
+                                          Width: =617
+                                          X: =0
+                                          Y: =9
+                                        Children:
+                                          - DataCardKey93:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue87:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =144
+                                                Mode: ='TextInputCanvas.Mode'.Multiline
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey93.Y + DataCardKey93.Height + 4
+                                          - ErrorMessage80:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue87.Y + DataCardValue87.Height
+                                          - StarVisible80:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey93.Y
+                                    - Approver_DataCard1:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        Properties:
+                                          DataField: ="Approver"
+                                          Default: =ThisItem.Approver
+                                          DisplayMode: =DisplayMode.View
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Approver)
+                                          Required: =false
+                                          Update: =DataCardValue83.Selected
+                                          Visible: =tbadmin_3.Selected.Value = "Purchase Admin"
+                                          Width: =617
+                                          X: =1
+                                          Y: =9
+                                        Children:
+                                          - DataCardKey89:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue83:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =Parent.DisplayMode
+                                                IsSearchable: =false
+                                                Items: =Choices([@hsa_purchaserequestList_1].Approver)
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey89.Y + DataCardKey89.Height + 4
+                                              Children:
+                                                - DisplayName10:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="DisplayName"
+                                                      FieldName: ="DisplayName"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                          - ErrorMessage76:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue83.Y + DataCardValue83.Height
+                                          - StarVisible76:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey89.Y
+                                    - Status_DataCard4:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: ComboBoxEdit
+                                        Properties:
+                                          DataField: ="Status"
+                                          Default: =ThisItem.Status
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,Status)
+                                          Height: =60
+                                          Required: =false
+                                          Update: =DataCardValue84.Selected
+                                          Visible: =tbadmin_3.Selected.Value = "Purchase Admin"
+                                          Width: =617
+                                          X: =0
+                                          Y: =10
+                                        Children:
+                                          - DataCardKey90:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: =Parent.DisplayName
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue84:
+                                              Control: ComboBox@0.0.51
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DefaultSelectedItems: =[Parent.Default]
+                                                DisplayMode: =Parent.DisplayMode
+                                                Items: =Choices([@hsa_purchaserequestList_1].Status)
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey90.Y + DataCardKey90.Height + 4
+                                              Children:
+                                                - Value6:
+                                                    Control: ComboBoxDataField@1.5.0
+                                                    Variant: textualColumn
+                                                    IsLocked: true
+                                                    Properties:
+                                                      FieldDisplayName: ="Value"
+                                                      FieldName: ="Value"
+                                                      FieldType: ="s"
+                                                      Order: =1
+                                          - ErrorMessage77:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue84.Y + DataCardValue84.Height
+                                          - StarVisible77:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =20
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey90.Y
+                                    - adminComments_DataCard3:
+                                        Control: TypedDataCard@1.0.7
+                                        Variant: TextualMultilineEdit
+                                        Properties:
+                                          DataField: ="adminComments"
+                                          Default: =ThisItem.adminComments
+                                          DisplayName: =DataSourceInfo([@hsa_purchaserequestList_1],DataSourceInfo.DisplayName,adminComments)
+                                          Required: =false
+                                          Update: =DataCardValue86.Value
+                                          Visible: =tbadmin_3.Selected.Value = "Purchase Admin"
+                                          Width: =617
+                                          X: =1
+                                          Y: =10
+                                        Children:
+                                          - DataCardKey92:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldName
+                                              Properties:
+                                                Height: =22
+                                                Text: ="Comments"
+                                                Weight: ='TextCanvas.Weight'.Semibold
+                                                Width: =Parent.Width - 48
+                                                Wrap: =false
+                                                X: =24
+                                                Y: =10
+                                          - DataCardValue86:
+                                              Control: TextInput@0.0.54
+                                              MetadataKey: FieldValue
+                                              Properties:
+                                                AccessibleLabel: =Parent.DisplayName
+                                                DisplayMode: =Parent.DisplayMode
+                                                Height: =144
+                                                Mode: ='TextInputCanvas.Mode'.Multiline
+                                                Required: =Parent.Required
+                                                ValidationState: =If(IsBlank(Parent.Error), "None", "Error")
+                                                Value: =Parent.Default
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardKey92.Y + DataCardKey92.Height + 4
+                                          - ErrorMessage79:
+                                              Control: Text@0.0.51
+                                              MetadataKey: ErrorMessage
+                                              Properties:
+                                                Height: =30
+                                                Text: =Parent.Error
+                                                Visible: =And(!IsBlank(Parent.Error), Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =Parent.Width - 48
+                                                X: =24
+                                                Y: =DataCardValue86.Y + DataCardValue86.Height
+                                          - StarVisible79:
+                                              Control: Text@0.0.51
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: ='TextCanvas.Align'.Center
+                                                Height: =30
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Y: =DataCardKey92.Y
+                        - cntgridrecords:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              Fill: =RGBA(245, 245, 245, 1)
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Vertical
+                              PaddingBottom: =8
+                              PaddingLeft: =8
+                              PaddingRight: =8
+                              PaddingTop: =8
+                              Visible: =tbadmin_3.Selected.Value="Items table"
+                              Width: =If(Self.X + 800 > Parent.Width, Parent.Width - Self.X, 800)
+                              X: =40
+                              Y: =40
+                            Children:
+                              - cntgridhdr:
+                                  Control: GroupContainer@1.3.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    LayoutMaxHeight: =50
+                                    LayoutMaxWidth: =0
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    Width: =Parent.Width
+                                  Children:
+                                    - lblGridHeader:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          Color: =RGBA(255, 255, 255, 1)
+                                          DisplayMode: =DisplayMode.View
+                                          Fill: =RGBA(109, 49, 162, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =46
+                                          Text: ="Update Quote Grid data"
+                                          Visible: =tbadmin_3.Selected.Value="Items table"
+                                          Width: =803
+                                          X: =2
+                                    - btSaveAll:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Align: =Align.Center
+                                          BasePaletteColor: =RGBA(78, 109, 222, 1)
+                                          DisplayMode: |-
+                                            =If(
+                                                !varShowNewRecord && btFormSubmit.Visible,
+                                                DisplayMode.Edit,
+                                                DisplayMode.View
+                                            )
+                                          Font: =Font.Arial
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          FontSize: =16
+                                          Height: =46
+                                          Icon: ="Save"
+                                          OnSelect: |-
+                                            =ClearCollect(
+                                                colChecked,
+                                                Filter(
+                                                    galPurchasequote_1.AllItems,
+                                                    ThisRecord.Toggle1_1.Checked = true
+                                                )
+                                            );
+                                            // Update collection from checked items
+                                            ForAll(
+                                                colChecked As Items,
+                                                Patch(
+                                                    colGridData,
+                                                    LookUp(
+                                                        colGridData,
+                                                        ID = Items.ID
+                                                    ),
+                                                    {
+                                                        Product: Items.txtProduct1_1.Value,
+                                                        Productcode: Items.txtProductcode_1.Value,
+                                                        WebLink: Items.txtWeblink_1.Value,
+                                                        Quantity: Value(Items.txtQuantity1_1.Value),
+                                                        Size: Items.txtSize_1.Value,
+                                                        Itemcost: Value(Items.txtCosts_1.Value)
+                                                    }
+                                                )
+                                            );
+                                            /// Update SharePoint from collection
+                                            ForAll(
+                                                colGridData As Items,
+                                                Patch(
+                                                    hsa_purchasequote,
+                                                    LookUp(
+                                                        hsa_purchasequote,
+                                                        ID = Items.ID
+                                                    ),
+                                                    {
+                                                        Product: Items.Product,
+                                                        Productcode: Items.Productcode,
+                                                        WebLink: Items.WebLink,
+                                                        Quantity: Items.Quantity,
+                                                        Size: Items.Size,
+                                                        Itemcost: Items.Itemcost
+                                                    }
+                                                )
+                                            );
+                                            // Refresh collection from SharePoint
+                                            ClearCollect(
+                                                colGridData,
+                                                Filter(
+                                                    hsa_purchasequote,
+                                                    ParentID.Value = dtTitle.Value
+                                                )
+                                            );
+                                            // Calculate total cost
+                                            Set(
+                                                varTotalCost,
+                                                Sum(
+                                                    colGridData,
+                                                    Totalcost
+                                                )
+                                            );
+                                            Set(
+                                                varSelectedItem,
+                                                Blank()
+                                            )
+                                          Text: ="Save"
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Width: =137
+                                          X: =814
+                                    - btAdditems:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Align: =Align.Center
+                                          BasePaletteColor: =RGBA(78, 109, 222, 1)
+                                          DisplayMode: "= If(\r\n    \r\n    !varShowNewRecord && btFormSubmit.Visible,\r\n    DisplayMode.Edit,\r\n    DisplayMode.View\r\n)"
+                                          Font: =Font.Arial
+                                          FontColor: =RGBA(255, 255, 255, 1)
+                                          FontSize: =16
+                                          Height: =46
+                                          Icon: ="Add"
+                                          OnSelect: |-
+                                            =Set(
+                                                varShowNewRecord,
+                                                true
+                                            );
+                                            Set(
+                                                varSelectedItem,
+                                                Blank()
+                                            )
+                                          Text: ="Add Item"
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Width: =137
+                                          X: =961
+                              - cntgridlabels:
+                                  Control: GroupContainer@1.3.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    Fill: =RGBA(214, 221, 224, 1)
+                                    Height: =Parent.Height
+                                    LayoutMaxHeight: =40
+                                    LayoutMaxWidth: =0
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                  Children:
+                                    - Label3_7:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =38
+                                          Text: ="Product"
+                                          X: =11
+                                    - Label3_8:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =38
+                                          Text: ="Product Code"
+                                          X: =271
+                                    - Label3_9:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =38
+                                          Text: |-
+                                            ="WebLink
+                                            "
+                                          X: =524
+                                    - Label3_10:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =35
+                                          Text: ="Size"
+                                          Width: =102
+                                          X: =715
+                                          Y: =3
+                                    - Label3_11:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =38
+                                          Text: ="Quantity"
+                                          Width: =102
+                                          X: =836
+                                    - Label3_12:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =38
+                                          Text: ="Cost"
+                                          Width: =93
+                                          X: =939
+                                    - Label3_13:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Align: =Align.Center
+                                          DisplayMode: =DisplayMode.View
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =38
+                                          Text: ="Total Cost"
+                                          Width: =125
+                                          X: =1014
+                              - cntgalrecords:
+                                  Control: GroupContainer@1.3.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =0
+                                    Height: =65
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutMaxHeight: =0
+                                    LayoutMaxWidth: =0
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =16
+                                    PaddingBottom: =8
+                                    PaddingLeft: =8
+                                    PaddingRight: =8
+                                    PaddingTop: =8
+                                    Visible: =varShowNewRecord
+                                  Children:
+                                    - galPurquoteNew:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                                        Properties:
+                                          DisplayMode: |
+                                            =  DisplayMode.Edit
+                                          Items: =colGridData
+                                          LayoutMaxHeight: =0
+                                          LayoutMaxWidth: =0
+                                          LayoutMinHeight: =16
+                                          LayoutMinWidth: =16
+                                          OnSelect: =Set(varSelectedItem,ThisItem)
+                                          ShowScrollbar: =false
+                                          TemplateSize: =60
+                                        Children:
+                                          - txtNewWeblink_1:
+                                              Control: TextInput@0.0.54
+                                              Properties:
+                                                Align: =Align.Left
+                                                Appearance: ="FilledLighter"
+                                                Height: =33
+                                                Value: =
+                                                Width: =200
+                                                X: =526
+                                          - txtNewSize_1:
+                                              Control: TextInput@0.0.54
+                                              Properties:
+                                                Align: =Align.Right
+                                                Appearance: ="FilledLighter"
+                                                Height: =33
+                                                Value: =
+                                                Width: =70
+                                                X: =750
+                                          - txtNewCost_1:
+                                              Control: TextInput@0.0.54
+                                              Properties:
+                                                Align: =Align.Right
+                                                Appearance: ="FilledLighter"
+                                                Height: =33
+                                                Value: =
+                                                Width: =61
+                                                X: =952
+                                          - txtNewTotalcost_1:
+                                              Control: TextInput@0.0.54
+                                              Properties:
+                                                Align: =Align.Right
+                                                DisplayMode: =DisplayMode.View
+                                                Font: =Font.'Lato Black'
+                                                FontSize: =15
+                                                Height: =35
+                                                Value: =Text(txtNewCost_1.Value * txtNewQuantity_1.Value,"$###,###.00")
+                                                Width: =99
+                                                X: =1033
+                                          - txtNewProduct_1:
+                                              Control: TextInput@0.0.54
+                                              Properties:
+                                                Align: =Align.Left
+                                                Appearance: ="FilledLighter"
+                                                Height: =33
+                                                Value: =
+                                                Width: =212
+                                                Y: =2
+                                          - txtNewProductcode_1:
+                                              Control: TextInput@0.0.54
+                                              Properties:
+                                                Align: =Align.Left
+                                                Appearance: ="FilledLighter"
+                                                Height: =33
+                                                Value: =
+                                                Width: =240
+                                                X: =250
+                                                Y: =2
+                                          - txtNewQuantity_1:
+                                              Control: TextInput@0.0.54
+                                              Properties:
+                                                Align: =Align.Right
+                                                Appearance: ="FilledLighter"
+                                                Height: =33
+                                                Value: =
+                                                Width: =70
+                                                X: =841
+                                                Y: =2
+                                          - btNewRecSave_1:
+                                              Control: Button@0.0.45
+                                              Properties:
+                                                Align: =Align.Center
+                                                Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                                Icon: ="Save"
+                                                IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                                Layout: ='ButtonCanvas.Layout'.IconOnly
+                                                OnSelect: |-
+                                                  =//Patch(colGridData,Defaults(colGridData),{Product:txtNewProduct.Value,Productcode:txtNewProductcode.Value,WebLink:txtNewWeblink.Value,Size:Value(txtNewSize.Value),Itemcost:Value(txtNewCost.Value),Quantity:Value(txtNewQuantity.Value)});
+                                                  Patch(
+                                                      hsa_purchasequote,
+                                                      Defaults(hsa_purchasequote),
+                                                      {
+                                                          Product: txtNewProduct_1.Value,
+                                                          Productcode: txtNewProductcode_1.Value,
+                                                          WebLink: txtNewWeblink_1.Value,
+                                                          Size: txtNewSize_1.Value,
+                                                          Itemcost: Value(txtNewCost_1.Value),
+                                                          Quantity: Value(txtNewQuantity_1.Value),
+                                                          ParentID: {
+                                                              Value: dtTitle.Value,
+                                                              Id: Value(dtID1.Value)
+                                                          }
+                                                      }
+                                                  );
+                                                  // Refresh collection from SharePoint
+                                                  ClearCollect(
+                                                      colGridData,
+                                                      Filter(
+                                                          hsa_purchasequote,
+                                                          ParentID.Value = dtTitle.Value
+                                                      )
+                                                  );
+                                                  Reset(txtNewCost_1);
+                                                  Reset(txtNewProduct_1);
+                                                  Reset(txtNewProductcode_1);
+                                                  Reset(txtNewWeblink_1);
+                                                  Reset(txtNewSize_1);
+                                                  Reset(txtNewQuantity_1);
+                                                  Set(
+                                                      varSelectedItem,
+                                                      Blank()
+                                                  );
+                                                  Set(
+                                                      varShowNewRecord,
+                                                      false
+                                                  )
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Width: =28
+                                                X: =1143
+                                                Y: =3
+                                          - btNewReset_1:
+                                              Control: Button@0.0.45
+                                              Properties:
+                                                Align: =Align.Center
+                                                Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                                Icon: ="ArrowReset"
+                                                IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                                Layout: ='ButtonCanvas.Layout'.IconOnly
+                                                OnSelect: |-
+                                                  =Reset(txtNewCost_1);
+                                                  Reset(txtNewProduct_1);
+                                                  Reset(txtNewProductcode_1);
+                                                  Reset(txtNewWeblink_1);
+                                                  Reset(txtNewSize_1);
+                                                  Reset(txtNewQuantity_1);
+                                                  Set(
+                                                      varSelectedItem,
+                                                      Blank()
+                                                  );
+                                                  Set(
+                                                      varShowNewRecord,
+                                                      false
+                                                  )
+                                                VerticalAlign: =VerticalAlign.Middle
+                                                Width: =28
+                                                X: =1171
+                                                Y: =3
+                              - galPurchasequote_1:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    DisplayMode: |
+                                      =If(btFormSubmit.Visible,DisplayMode.Edit,DisplayMode.View)
+                                    Items: =colGridData
+                                    LayoutMaxHeight: =0
+                                    LayoutMaxWidth: =0
+                                    LayoutMinHeight: =16
+                                    LayoutMinWidth: =10
+                                    OnSelect: |-
+                                      =Set(
+                                          varSelectedItem,
+                                          ThisItem
+                                      );
+                                      Set(
+                                          varShowNewRecord,
+                                          false
+                                      )
+                                    TabIndex: =0
+                                    TemplateSize: =50
+                                    Width: =Parent.Width
+                                  Children:
+                                    - btReset_1:
+                                        Control: Button@0.0.45
+                                        Properties:
+                                          Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                          Height: =Parent.TemplateHeight -2
+                                          Icon: ="DismissCircle"
+                                          IconStyle: ='ButtonCanvas.IconStyle'.Filled
+                                          Layout: ='ButtonCanvas.Layout'.IconOnly
+                                          OnSelect: |-
+                                            =Reset(txtCosts_1);
+                                            Reset(txtProduct1_1);
+                                            Reset(txtProductcode_1);
+                                            Reset(txtWeblink_1);
+                                            Reset(txtSize_1);
+                                            Reset(txtQuantity1_1);
+                                            Set(
+                                                varSelectedItem,
+                                                Blank()
+                                            )
+                                          VerticalAlign: =VerticalAlign.Middle
+                                          Visible: =ThisItem.ID = varSelectedItem.ID
+                                          Width: =35
+                                          X: =1183
+                                          Y: =4
+                                    - Toggle1_1:
+                                        Control: Toggle@1.1.5
+                                        Properties:
+                                          Checked: =ThisItem.Product <> txtProduct1_1.Value || ThisItem.Productcode <> txtProductcode_1.Value || ThisItem.WebLink <> txtWeblink_1.Value ||  Value(ThisItem.Quantity) <> Value(txtQuantity1_1.Value) || Value(ThisItem.Itemcost) <> Value(txtCosts_1.Value)
+                                          Height: =Parent.TemplateHeight
+                                          OnSelect: =Select(Parent)
+                                          Visible: =false
+                                          Width: =23
+                                          X: =1189
+                                          Y: =4
+                                    - txtProduct1_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Align: =Align.Left
+                                          Appearance: =If(ThisItem.ID = varSelectedItem.ID,"FilledLighter","FilledDarker")
+                                          DisplayMode: =If(ThisItem.ID = varSelectedItem.ID,DisplayMode.Edit,DisplayMode.View)
+                                          Height: =Parent.TemplateHeight-6
+                                          PaddingBottom: =3
+                                          PaddingLeft: =1
+                                          PaddingRight: =1
+                                          PaddingTop: =3
+                                          Value: =ThisItem.Product
+                                          Width: =232
+                                          Y: =6
+                                    - txtProductcode_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Align: =Align.Left
+                                          Appearance: =If(ThisItem.ID = varSelectedItem.ID,"FilledLighter","FilledDarker")
+                                          DisplayMode: =If(ThisItem.ID = varSelectedItem.ID,DisplayMode.Edit,DisplayMode.View)
+                                          Height: =Parent.TemplateHeight-6
+                                          PaddingBottom: =3
+                                          PaddingLeft: =1
+                                          PaddingRight: =1
+                                          PaddingTop: =3
+                                          Value: =ThisItem.Productcode
+                                          Width: =223
+                                          X: =243
+                                          Y: =6
+                                    - txtWeblink_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Align: =Align.Left
+                                          Appearance: =If(ThisItem.ID = varSelectedItem.ID,"FilledLighter","FilledDarker")
+                                          DisplayMode: =If(ThisItem.ID = varSelectedItem.ID,DisplayMode.Edit,DisplayMode.View)
+                                          Height: =Parent.TemplateHeight-6
+                                          PaddingBottom: =3
+                                          PaddingLeft: =1
+                                          PaddingRight: =1
+                                          PaddingTop: =3
+                                          Value: =ThisItem.WebLink
+                                          Width: =200
+                                          X: =509
+                                          Y: =6
+                                    - txtSize_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Align: =Align.Right
+                                          Appearance: =If(ThisItem.ID = varSelectedItem.ID,"FilledLighter","FilledDarker")
+                                          DisplayMode: =If(ThisItem.ID = varSelectedItem.ID,DisplayMode.Edit,DisplayMode.View)
+                                          Height: =44
+                                          PaddingBottom: =3
+                                          PaddingLeft: =1
+                                          PaddingRight: =1
+                                          PaddingTop: =3
+                                          Value: =ThisItem.Size
+                                          Width: =113
+                                          X: =709
+                                          Y: =6
+                                    - txtQuantity1_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Align: =Align.Right
+                                          Appearance: =If(ThisItem.ID = varSelectedItem.ID,"FilledLighter","FilledDarker")
+                                          DisplayMode: =If(ThisItem.ID = varSelectedItem.ID,DisplayMode.Edit,DisplayMode.View)
+                                          Height: =44
+                                          PaddingBottom: =3
+                                          PaddingLeft: =1
+                                          PaddingRight: =1
+                                          PaddingTop: =3
+                                          TriggerOutput: ='TextInputCanvas.TriggerOutput'.FocusOut
+                                          Value: =ThisItem.Quantity
+                                          Width: =50
+                                          X: =850
+                                          Y: =6
+                                    - txtCosts_1:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Align: =Align.Right
+                                          Appearance: =If(ThisItem.ID = varSelectedItem.ID,"FilledLighter","FilledDarker")
+                                          DisplayMode: =If(ThisItem.ID = varSelectedItem.ID,DisplayMode.Edit,DisplayMode.View)
+                                          Height: =Parent.TemplateHeight-6
+                                          PaddingBottom: =1
+                                          PaddingLeft: =3
+                                          PaddingRight: =3
+                                          PaddingTop: =1
+                                          TriggerOutput: ='TextInputCanvas.TriggerOutput'.FocusOut
+                                          Value: =ThisItem.Itemcost
+                                          Width: =70
+                                          X: =954
+                                          Y: =6
+                                    - txtTotalcosts:
+                                        Control: TextInput@0.0.54
+                                        Properties:
+                                          Align: =Align.Right
+                                          DisplayMode: =DisplayMode.View
+                                          Font: =Font.'Lato Black'
+                                          Height: =43
+                                          PaddingBottom: =3
+                                          PaddingLeft: =1
+                                          PaddingRight: =1
+                                          PaddingTop: =1
+                                          TriggerOutput: ='TextInputCanvas.TriggerOutput'.Delayed
+                                          Value: =Text(txtCosts_1.Value * txtQuantity1_1.Value,"$###,###.00")
+                                          Width: =90
+                                          X: =1045
+                                          Y: =5
+                                    - Image1_1:
+                                        Control: Image@2.2.3
+                                        Properties:
+                                          BorderStyle: =BorderStyle.None
+                                          DisplayMode: |-
+                                            =If(
+                                               btFormSubmit.Visible,
+                                                DisplayMode.Edit,
+                                                DisplayMode.View
+                                            )
+                                          Height: |+
+                                            =Parent.TemplateHeight+3
+                                          Image: =
+                                          OnSelect: =Select(Parent)
+                                          TabIndex: =0
+                                          Visible: =ThisItem.ID <> varSelectedItem.ID
+                                          Width: =Parent.TemplateWidth
+                        - ButtonContainer1_6:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              FillPortions: =0
+                              Height: =50
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinWidth: =0
+                              PaddingBottom: =10
+                              PaddingRight: =24
+                              PaddingTop: =10
+                            Children:
+                              - CancelButton1_5:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    AccessibleLabel: ="Cancel form button"
+                                    Appearance: ='ButtonCanvas.Appearance'.Secondary
+                                    Icon: ="ArrowLeft"
+                                    OnSelect: |-
+                                      =Back();
+                                      UpdateContext({varStatus1: ""});
+                                      /*Set(
+                                          varCurrStatus,
+                                          Blank()
+                                      )*/
+                                    Text: ="Back"
+                                    Width: =120
+                              - btFormSubmit:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    AccessibleLabel: ="Submit form button"
+                                    OnSelect: |+
+                                      =SubmitForm(Form_Purchase);
+
+                                    Text: ="Submit"
+                                    Visible: |-
+                                      =If(
+                                          !varFormMode,
+                                          true,
+                                          false
+                                      )
+                                    Width: =120
+                              - tgSendMsg_2:
+                                  Control: Toggle@1.1.5
+                                  Properties:
+                                    Label: ="Update Requestor"
+                                    LabelPosition: ='Toggle.LabelPosition'.Before
+                                    Visible: =Form_Purchase.Mode = FormMode.Edit
+                                    Width: =200
