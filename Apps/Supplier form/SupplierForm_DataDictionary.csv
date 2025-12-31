@@ -1,0 +1,25 @@
+Tab Name,Field Label,Field Name (ID),Data Type,Required,Properties/Notes
+Service Details,Reason for Request,reason,Textarea,Yes,
+Service Details,Service Type/Specialty,serviceType,Text,Yes,
+Service Details,Description of Service,description,Textarea,Yes,Placeholder: "Include relevant details specific to the care of the detainee..."
+Service Details,Location / Delivery,location,Checkbox (Multi-select),Yes,Options: IDC Onsite; IDC Offsite; RD
+Service Details,Is this an urgent request?,urgent,Radio,Yes,Options: Yes; No
+Service Details,If yes please explain why,urgentReason,Textarea,Conditional,Visible only if Urgent = Yes
+Service Details,Additional / Non-clinical Spec,additionalSpec,Textarea,No,
+Assessment,Is a public provider able to fulfill this?,publicProvider,Radio,Yes,Options: Yes; No; N/A
+Assessment,Details (Public Provider),publicProviderDetails,Textarea,Conditional,Visible only if Public Provider != N/A
+Assessment,Is the client on a public waitlist?,waitlist,Radio,Yes,Options: Yes; No; N/A
+Assessment,Existing supplier exists?,existingSupplier,Radio,Yes,Options: Yes; No
+Admin & Supplier,Proposed Supplier Name,supplierName,Text,Yes,
+Admin & Supplier,Supplier Contact Name,supplierContactName,Text,No,Nested under Contact Details
+Admin & Supplier,Supplier Contact Role,supplierContactRole,Text,No,Nested under Contact Details
+Admin & Supplier,Supplier Contact Phone,supplierContactPhone,Tel,No,Nested under Contact Details
+Admin & Supplier,Supplier Contact Email,supplierContactEmail,Email,No,Nested under Contact Details
+Admin & Supplier,Supplier Contact Address,supplierContactAddress,Text,No,Nested under Contact Details
+Admin & Supplier,ABN/ACN (if known),abn,Text,No,
+Admin & Supplier,Relates to preexisting supplier?,preexisting,Radio,Yes,Options: Yes; No
+Admin & Supplier,Estimated contract duration,contractDuration,Text,Yes,
+Admin & Supplier,Estimated Spend / Frequency,estimatedSpend,Text,No,
+Procurement,Covered under existing contract/MOU?,existingContract,Radio,Yes,Options: Yes; No
+Procurement,Quotation/Fee Schedule attached?,quotationAttached,Radio,Yes,Options: Yes; No
+Procurement,If outside scope approval obtained?,approvalObtained,Radio,Yes,Options: Yes; No

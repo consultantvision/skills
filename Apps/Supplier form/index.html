@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Onboarding Request - PowerApp Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Progress Dashboard -->
+        <div class="dashboard-panel">
+            <h1 class="app-title">New Supplier Onboarding Request</h1>
+            <div class="progress-trackers">
+                <div class="tracker-item" data-section="service">
+                    <div class="tracker-circle">1</div>
+                    <div class="tracker-info">
+                        <span class="tracker-label">Service Details</span>
+                        <span class="tracker-status">Pending</span>
+                    </div>
+                </div>
+                <div class="tracker-line"></div>
+                <div class="tracker-item" data-section="assessment">
+                    <div class="tracker-circle">2</div>
+                    <div class="tracker-info">
+                        <span class="tracker-label">Assessment</span>
+                        <span class="tracker-status">Pending</span>
+                    </div>
+                </div>
+                <div class="tracker-line"></div>
+                <div class="tracker-item" data-section="supplier">
+                    <div class="tracker-circle">3</div>
+                    <div class="tracker-info">
+                        <span class="tracker-label">Supplier Info</span>
+                        <span class="tracker-status">Pending</span>
+                    </div>
+                </div>
+                <div class="tracker-line"></div>
+                <div class="tracker-item" data-section="procurement">
+                    <div class="tracker-circle">4</div>
+                    <div class="tracker-info">
+                        <span class="tracker-label">Procurement</span>
+                        <span class="tracker-status">Pending</span>
+                    </div>
+                </div>
+            </div>
+            <div class="overall-progress">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 0%"></div>
+                </div>
+                <span class="progress-text">0% Completed</span>
+            </div>
+        </div>
+
+        <!-- Main Form Area -->
+        <div class="form-panel">
+            <form id="powerAppForm">
+
+                <!-- Tab Navigation -->
+                <div class="tab-nav">
+                    <button type="button" class="tab-btn active" data-tab="service">Service Details</button>
+                    <button type="button" class="tab-btn" data-tab="assessment">Assessment</button>
+                    <button type="button" class="tab-btn" data-tab="supplier">Admin & Supplier</button>
+                    <button type="button" class="tab-btn" data-tab="procurement">Procurement</button>
+                </div>
+
+                <!-- Tab 1: Service Details -->
+                <div class="tab-content active" id="service">
+                    <div class="power-table">
+                        <div class="table-header">Service Details & Specification</div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Reason for Request <span class="required">*</span></div>
+                            <div class="cell-input">
+                                <textarea name="reason" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Service Type/Specialty <span class="required">*</span></div>
+                            <div class="cell-input">
+                                <input type="text" name="serviceType" required>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Description of Service <span class="required">*</span></div>
+                            <div class="cell-input">
+                                <textarea name="description"
+                                    placeholder="Include relevant details specific to the care of the detainee..."
+                                    required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Location / Delivery <span class="required">*</span></div>
+                            <div class="cell-input checkbox-group">
+                                <label><input type="checkbox" name="location" value="idc-onsite"> IDC Onsite</label>
+                                <label><input type="checkbox" name="location" value="idc-offsite"> IDC Offsite</label>
+                                <label><input type="checkbox" name="location" value="rd"> RD</label>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Is this an urgent request? <span class="required">*</span></div>
+                            <div class="cell-input radio-group">
+                                <label><input type="radio" name="urgent" value="yes" required> Yes</label>
+                                <label><input type="radio" name="urgent" value="no"> No</label>
+                            </div>
+                        </div>
+                        <!-- Conditional for Urgent -->
+                        <div class="table-row conditional" id="urgentReasonRow">
+                            <div class="cell-label">If yes, please explain why</div>
+                            <div class="cell-input">
+                                <textarea name="urgentReason"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Additional / Non-clinical Spec</div>
+                            <div class="cell-input">
+                                <textarea name="additionalSpec"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Assessment Questions -->
+                <div class="tab-content" id="assessment">
+                    <div class="power-table">
+                        <div class="table-header">Assessment Questions</div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Is a public provider able to fulfill this? <span
+                                    class="required">*</span></div>
+                            <div class="cell-input radio-group">
+                                <label><input type="radio" name="publicProvider" value="yes" required> Yes</label>
+                                <label><input type="radio" name="publicProvider" value="no"> No</label>
+                                <label><input type="radio" name="publicProvider" value="na"> N/A</label>
+                            </div>
+                        </div>
+                        <div class="table-row conditional" id="publicProviderDetailsRow">
+                            <div class="cell-label">Details</div>
+                            <div class="cell-input">
+                                <textarea name="publicProviderDetails"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Is the client on a public waitlist? <span class="required">*</span>
+                            </div>
+                            <div class="cell-input radio-group">
+                                <label><input type="radio" name="waitlist" value="yes" required> Yes</label>
+                                <label><input type="radio" name="waitlist" value="no"> No</label>
+                                <label><input type="radio" name="waitlist" value="na"> N/A</label>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Existing supplier exists? <span class="required">*</span></div>
+                            <div class="cell-input radio-group">
+                                <label><input type="radio" name="existingSupplier" value="yes" required> Yes</label>
+                                <label><input type="radio" name="existingSupplier" value="no"> No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Administrative & Supplier -->
+                <div class="tab-content" id="supplier">
+                    <div class="power-table">
+                        <div class="table-header">Administrative & Supplier Details</div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Proposed Supplier Name <span class="required">*</span></div>
+                            <div class="cell-input">
+                                <input type="text" name="supplierName" required>
+                            </div>
+                        </div>
+
+                        <!-- Nested Grid for Contact Details -->
+                        <div class="table-row">
+                            <div class="cell-label">Supplier Contact Details</div>
+                            <div class="cell-input nested-grid">
+                                <div class="nested-row">
+                                    <span class="nested-label">Name</span>
+                                    <input type="text" name="supplierContactName">
+                                </div>
+                                <div class="nested-row">
+                                    <span class="nested-label">Role</span>
+                                    <input type="text" name="supplierContactRole">
+                                </div>
+                                <div class="nested-row">
+                                    <span class="nested-label">Phone</span>
+                                    <input type="tel" name="supplierContactPhone">
+                                </div>
+                                <div class="nested-row">
+                                    <span class="nested-label">Email</span>
+                                    <input type="email" name="supplierContactEmail">
+                                </div>
+                                <div class="nested-row">
+                                    <span class="nested-label">Address</span>
+                                    <input type="text" name="supplierContactAddress">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">ABN/ACN (if known)</div>
+                            <div class="cell-input">
+                                <input type="text" name="abn">
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Relates to preexisting supplier? <span class="required">*</span>
+                            </div>
+                            <div class="cell-input radio-group">
+                                <label><input type="radio" name="preexisting" value="yes" required> Yes</label>
+                                <label><input type="radio" name="preexisting" value="no"> No</label>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Estimated contract duration <span class="required">*</span></div>
+                            <div class="cell-input">
+                                <input type="text" name="contractDuration" required>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Estimated Spend / Frequency</div>
+                            <div class="cell-input">
+                                <input type="text" name="estimatedSpend">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Procurement -->
+                <div class="tab-content" id="procurement">
+                    <div class="power-table">
+                        <div class="table-header">Procurement Considerations</div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Covered under existing contract/MOU? <span class="required">*</span>
+                            </div>
+                            <div class="cell-input radio-group">
+                                <label><input type="radio" name="existingContract" value="yes" required> Yes</label>
+                                <label><input type="radio" name="existingContract" value="no"> No</label>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">Quotation/Fee Schedule attached? <span class="required">*</span>
+                            </div>
+                            <div class="cell-input radio-group">
+                                <label><input type="radio" name="quotationAttached" value="yes" required> Yes</label>
+                                <label><input type="radio" name="quotationAttached" value="no"> No</label>
+                            </div>
+                        </div>
+
+                        <div class="table-row">
+                            <div class="cell-label">If outside scope, approval obtained? <span class="required">*</span>
+                            </div>
+                            <div class="cell-input radio-group">
+                                <label><input type="radio" name="approvalObtained" value="yes" required> Yes</label>
+                                <label><input type="radio" name="approvalObtained" value="no"> No</label>
+                            </div>
+                        </div>
+
+                        <div class="submit-area">
+                            <p class="validation-message" id="validationMessage">Please complete all sections to submit.
+                            </p>
+                            <button type="submit" class="submit-btn" disabled>Submit Request</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

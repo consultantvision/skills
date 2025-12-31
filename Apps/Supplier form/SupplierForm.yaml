@@ -1,0 +1,343 @@
+Screens:
+  SupplierFormScreen_1:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      OnVisible: |
+        =UpdateContext({ varCurrentTab: "Service Details" });
+    Children:
+      - MainContainer_1:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =760
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            Width: =1350
+          Children:
+            - HeaderLabel_1:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  Color: =RGBA(255, 255, 255, 1)
+                  Fill: =RGBA(0, 120, 212, 1)
+                  FontWeight: =FontWeight.Bold
+                  Height: =60
+                  Size: =24
+                  Text: ="New Supplier Onboarding Request"
+            - TabContainer_1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  Fill: =RGBA(230, 230, 230, 1)
+                  FillPortions: =0
+                  Height: =50
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                  LayoutMinHeight: =30
+                Children:
+                  - btnTabService_1:
+                      Control: Button@0.0.45
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        FillPortions: =1
+                        Icon: ="Airplane"
+                        OnSelect: |
+                          =UpdateContext({ varCurrentTab: "Service Details" })
+                        Text: ="Service Details"
+                        Width: =200
+                  - btnTabAssessment_1:
+                      Control: Button@0.0.45
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        FillPortions: =1
+                        OnSelect: |
+                          =UpdateContext({ varCurrentTab: "Assessment" })
+                        Text: ="Assessment"
+                  - btnTabSupplier_1:
+                      Control: Button@0.0.45
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        FillPortions: =1
+                        OnSelect: |
+                          =UpdateContext({ varCurrentTab: "Admin & Supplier" })
+                        Text: ="Admin & Supplier"
+                  - btnTabProcurement_1:
+                      Control: Button@0.0.45
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        FillPortions: =1
+                        OnSelect: |
+                          =UpdateContext({ varCurrentTab: "Procurement" })
+                        Text: ="Procurement"
+            - ContentScrollContainer_1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.SetByContainer
+                  Height: =580
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutOverflowY: =LayoutOverflow.Scroll
+                  PaddingLeft: =20
+                  PaddingRight: =20
+                  Width: =980
+                Children:
+                  - conServiceDetails_1:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =15
+                        Visible: =varCurrentTab = "Service Details"
+                        Width: =940
+                      Children:
+                        - lblReason_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Reason for Request *"
+                              Width: =900
+                        - txtReason_1:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              Height: =80
+                              Mode: =TextInputMode.Multiline
+                              Width: =900
+                        - lblServiceType_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Service Type/Specialty *"
+                              Width: =900
+                        - txtServiceType_1:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              Width: =900
+                        - lblDescription_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Description of Service *"
+                              Width: =900
+                        - txtDescription_1:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              Height: =80
+                              Mode: =TextInputMode.Multiline
+                              Width: =900
+                        - lblLocation_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Location / Delivery *"
+                              Width: =900
+                        - cmbLocation_1:
+                            Control: ComboBox@0.0.51
+                            Properties:
+                              Items: =["IDC Onsite", "IDC Offsite", "RD"]
+                              SelectMultiple: =true
+                              Width: =900
+                        - lblUrgent_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Is this an urgent request? *"
+                        - radUrgent_1:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Items: =["Yes", "No"]
+                              Layout: =Layout.Horizontal
+                        - conUrgentReason_1:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              Visible: =radUrgent_1.Selected.Value = "Yes"
+                            Children:
+                              - lblUrgentReason_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Text: ="If yes, please explain why"
+                              - txtUrgentReason_1:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    Mode: =TextInputMode.Multiline
+                        - lblAdditionalSpec_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Additional / Non-clinical Spec"
+                        - txtAdditionalSpec_1:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              Mode: =TextInputMode.Multiline
+                  - conAssessment_1:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =10
+                        Visible: =varCurrentTab = "Assessment"
+                      Children:
+                        - lblPublicProvider_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Is a public provider able to fulfill this? *"
+                        - radPublicProvider_1:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Items: =["Yes", "No", "N/A"]
+                              Layout: =Layout.Horizontal
+                        - conPublicProviderDetails_1:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              Visible: =radPublicProvider_1.Selected.Value <> "N/A"
+                            Children:
+                              - lblPublicProviderDetails_1:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Text: ="Details (Public Provider)"
+                              - txtPublicProviderDetails_1:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    Mode: =TextInputMode.Multiline
+                        - lblWaitlist_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Is the client on a public waitlist? *"
+                        - radWaitlist_1:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Items: =["Yes", "No", "N/A"]
+                              Layout: =Layout.Horizontal
+                        - lblExistingSupplier_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Existing supplier exists? *"
+                        - radExistingSupplier_1:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Items: =["Yes", "No"]
+                              Layout: =Layout.Horizontal
+                  - conSupplier_1:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =10
+                        Visible: =varCurrentTab = "Admin & Supplier"
+                      Children:
+                        - lblSupplierName_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Proposed Supplier Name *"
+                        - txtSupplierName_1:
+                            Control: Classic/TextInput@2.3.2
+                        - lblContactDetails_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              FontWeight: =FontWeight.Semibold
+                              Text: ="Supplier Contact Details"
+                        - conContactDetailsNested_1:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =5
+                            Children:
+                              - txtContactName_1:
+                                  Control: Classic/TextInput@2.3.2
+                              - txtContactRole_1:
+                                  Control: Classic/TextInput@2.3.2
+                              - txtContactPhone_1:
+                                  Control: Classic/TextInput@2.3.2
+                              - txtContactEmail_1:
+                                  Control: Classic/TextInput@2.3.2
+                              - txtContactAddress_1:
+                                  Control: Classic/TextInput@2.3.2
+                        - lblABN_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="ABN/ACN (if known)"
+                        - txtABN_1:
+                            Control: Classic/TextInput@2.3.2
+                        - lblPreexisting_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Relates to preexisting supplier? *"
+                        - radPreexisting_1:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Items: =["Yes", "No"]
+                              Layout: =Layout.Horizontal
+                        - lblContractDuration_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Estimated contract duration *"
+                        - txtContractDuration_1:
+                            Control: Classic/TextInput@2.3.2
+                        - lblEstimatedSpend_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Estimated Spend / Frequency"
+                        - txtEstimatedSpend_1:
+                            Control: Classic/TextInput@2.3.2
+                  - conProcurement_1:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =10
+                        Visible: =varCurrentTab = "Procurement"
+                      Children:
+                        - lblExistingContract_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Covered under existing contract/MOU? *"
+                        - radExistingContract_1:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Items: =["Yes", "No"]
+                              Layout: =Layout.Horizontal
+                        - lblQuotationAttached_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="Quotation/Fee Schedule attached? *"
+                        - radQuotationAttached_1:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Items: =["Yes", "No"]
+                              Layout: =Layout.Horizontal
+                        - lblApprovalObtained_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Text: ="If outside scope, approval obtained? *"
+                        - radApprovalObtained_1:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Items: =["Yes", "No"]
+                              Layout: =Layout.Horizontal
+                        - btnSubmit_1:
+                            Control: Button@0.0.45
+                            Properties:
+                              DisplayMode: |
+                                =If(
+                                    IsBlank(txtReason_1.Text) || IsBlank(txtServiceType_1.Text),
+                                    DisplayMode.Disabled,
+                                    DisplayMode.Edit
+                                )
+                              OnSelect: |
+                                =Collect(
+                                    colSupplierRequests,
+                                    {
+                                        Title: "New Request",
+                                        Reason: txtReason_1.Text,
+                                        ServiceType: txtServiceType_1.Text,
+                                        Description: txtDescription_1.Text,
+                                        Urgent: radUrgent_1.Selected.Value,
+                                        SupplierName: txtSupplierName_1.Text,
+                                        ContactEmail: txtContactEmail_1.Text
+                                    }
+                                );
+                                Notify("Request Submitted Successfully", NotificationType.Success);
+                                Navigate(SuccessScreen)
+                              Text: ="Submit Request"

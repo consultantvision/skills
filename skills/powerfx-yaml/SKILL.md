@@ -6,41 +6,122 @@ license: Complete terms in LICENSE.txt
 
 # PowerFx YAML Generation
 
-This skill enables the generation of syntactically correct PowerFx YAML code for PowerApps Canvas Apps. It adheres to the Microsoft Power Fx YAML Formula Grammar.
+This skill enables the generation of syntactically correct PowerFx YAML code for PowerApps Canvas Apps.
 
-## Workflow
+## Critical Syntax Rules
 
-1.  **Analyze Requirements**: Identify the screen controls, layout structure, and PowerFx logic (formulas) required by the user.
-2.  **Apply Syntax Rules**: Strictly follow the grammar defined in [syntax-guide.md](syntax-guide.md).
-    *   **Leading `=`**: All expressions must start with an equal sign.
-    *   **Block Scalars**: Use multi-line syntax (`|`) for complex formulas or those with colons/hashes.
-    *   **Component Structure**: Use correct `Name As Type` syntax.
-3.  **Generate Output**: Produce the complete YAML structure within a code block.
+1. **Control Definition**: ALWAYS use the `Control:` key (never use `Name As Type` syntax)
+2. **Formulas with Colons**: Use block scalars (`|`) for any formula containing `:` (e.g., `UpdateContext`)
+3. **Leading `=`**: All property expressions MUST start with `=`
+4. **Properties Block**: Controls must have a `Properties:` section for their attributes
 
-## Examples
+## Control Types Reference
 
-### Simple Button
+### Standard Controls
+
 ```yaml
-SubmitButton As Button:
-    X: =100
-    Y: =100
-    Text: ="Submit Request"
-    OnSelect: |
-        =Notify( "Submitting..." );
-        SubmitForm( RequestForm );
-        Navigate( SuccessScreen, ScreenTransition.Fade )
+- btnSubmit:
+    Control: Button
+    Properties:
+      Text: ="Submit"
+      OnSelect: |
+        =Notify("Saved")
+
+- lblTitle:
+    Control: Label
+    Properties:
+      Text: ="Welcome"
+      FontWeight: =FontWeight.Bold
+
+- radChoice:
+    Control: Radio
+    Properties:
+      Items: =["Yes", "No"]
+      Layout: =Layout.Horizontal
+
+- cmbOptions:
+    Control: ComboBox
+    Properties:
+      Items: =["Option 1", "Option 2"]
+      SelectMultiple: =true
 ```
 
-### Gallery Component
+### Classic/TextInput (Form Inputs)
+
+Use `Classic/TextInput` for text entry controls:
+
 ```yaml
-UserGallery As Gallery.horizontalGallery:
-    Items: =UsersList
-    TemplatePadding: =10
+- txtName:
+    Control: Classic/TextInput
+    Properties:
+      Mode: =TextInputMode.Multiline
+      Height: =100
+
+- txtEmail:
+    Control: Classic/TextInput
+    Properties:
+```
+
+**Important**: Do NOT use `Default`, `DefaultValue`, `Hint`, or `HintText` properties - they are not supported.
+
+### GroupContainer (Layout Containers)
+
+MUST use versioned syntax with `Variant`:
+
+```yaml
+- MainContainer:
+    Control: GroupContainer@1.3.0
+    Variant: AutoLayout
+    Properties:
+      LayoutDirection: =LayoutDirection.Vertical
+      LayoutGap: =16
+      Fill: =RGBA(245, 245, 245, 1)
     Children:
-        - TitleLabel As Label:
-            Text: =ThisItem.FullName
-            FontWeight: =FontWeight.Bold
+      - ChildControl:
+          Control: Label
+          Properties:
+            Text: ="Child Content"
+```
+
+## Common Patterns
+
+### Tab Navigation with Conditional Visibility
+
+```yaml
+- btnTab1:
+    Control: Button
+    Properties:
+      Text: ="Tab 1"
+      OnSelect: |
+        =UpdateContext({ varCurrentTab: "Tab1" })
+
+- conTab1Content:
+    Control: GroupContainer@1.3.0
+    Variant: AutoLayout
+    Properties:
+      Visible: =varCurrentTab = "Tab1"
+    Children:
+      - lblContent:
+          Control: Label
+          Properties:
+            Text: ="Tab 1 Content"
+```
+
+### Conditional Container
+
+```yaml
+- conConditional:
+    Control: GroupContainer@1.3.0
+    Variant: AutoLayout
+    Properties:
+      Visible: =varShowDetails = true
+    Children:
+      - txtDetails:
+          Control: Classic/TextInput
+          Properties:
+            Mode: =TextInputMode.Multiline
 ```
 
 ## Reference
+
 For detailed syntax rules, see [syntax-guide.md](syntax-guide.md).
