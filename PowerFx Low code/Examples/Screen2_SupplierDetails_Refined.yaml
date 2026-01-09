@@ -1,0 +1,223 @@
+Screens:
+  Screen2_SupplierDetails:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      OnVisible: |
+        =UpdateContext({ varCurrentStep: 2 })
+    Children:
+      - MainContainer_S2:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =10
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Width: =Parent.Width
+          Children:
+            - Dashboard_S2:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =140
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =10
+                  LayoutMaxHeight: =120
+                  LayoutMinHeight: =50
+                  PaddingBottom: =10
+                  PaddingLeft: =20
+                  PaddingRight: =20
+                  PaddingTop: =10
+                Children:
+                  - lblTitle_S2:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        AlignInContainer: =AlignInContainer.Stretch
+                        Color: =RGBA(102, 51, 153, 1)
+                        FontWeight: =FontWeight.Bold
+                        Size: =20
+                        Text: ="New Supplier Onboarding Request"
+                  - conSteps_S2:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =40
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =50
+                        LayoutMinHeight: =50
+                      Children:
+                        - lblStep1_S2_Gray:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(166, 166, 166, 1)
+                              Text: ="1. Service Details"
+                        - lblStep2_S2:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(102, 51, 153, 1)
+                              FontWeight: =FontWeight.Bold
+                              Text: ="2. Admin & Supplier"
+                        - lblStep3_S2_Gray:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(166, 166, 166, 1)
+                              Text: ="3. Procurement"
+            - ScrollContent_S2:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =20
+                  LayoutOverflowY: =LayoutOverflow.Scroll
+                Children:
+                  - Header_Supplier_S2:
+                      Control: Label@2.5.1
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =RGBA(102, 51, 153, 1)
+                        FontWeight: =FontWeight.Bold
+                        PaddingLeft: =10
+                        Size: =16
+                        Text: ="Administrative & Supplier Details"
+                  - conSupplier_4:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =20
+                        PaddingLeft: =20
+                        PaddingRight: =20
+                        Width: =Parent.Width - 40
+                      Children:
+                        - conSupplierLeft_2:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =15
+                            Children:
+                              - lblSupplierName_4:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FontWeight: =FontWeight.Bold
+                                    Text: ="Proposed Supplier Name *"
+                              - txtSupplierName_4:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                              - lblContactDetails_4:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FontWeight: =FontWeight.Bold
+                                    Text: ="Supplier Contact Details"
+                              - conContactDetailsNested_4:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =5
+                                  Children:
+                                    - txtContactName_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          HintText: ="Name"
+                                    - txtContactRole_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          HintText: ="Role"
+                                    - txtContactPhone_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          HintText: ="Phone"
+                                    - txtContactEmail_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          HintText: ="Email"
+                                    - txtContactAddress_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          Height: =60
+                                          HintText: ="Address"
+                                          Mode: =TextInputMode.Multiline
+                        - conSupplierRight_2:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =15
+                            Children:
+                              - lblABN_4:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FontWeight: =FontWeight.Bold
+                                    Text: ="ABN/ACN (if known)"
+                              - txtABN_4:
+                                  Control: Classic/TextInput@2.3.2
+                              - lblPreexisting_4:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FontWeight: =FontWeight.Bold
+                                    Text: ="Relates to preexisting supplier? *"
+                              - radPreexisting_4:
+                                  Control: Radio@0.0.25
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    Items: =["Yes", "No"]
+                                    Layout: =Layout.Horizontal
+                              - lblContractDuration_4:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FontWeight: =FontWeight.Bold
+                                    Text: ="Estimated contract duration *"
+                              - txtContractDuration_4:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                              - lblEstimatedSpend_4:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FontWeight: =FontWeight.Bold
+                                    Text: ="Estimated Spend / Frequency"
+                              - txtEstimatedSpend_4:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+            - Footer_S2:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                  LayoutMaxHeight: =55
+                  LayoutMinHeight: =50
+                  PaddingLeft: =20
+                  PaddingRight: =20
+                Children:
+                  - btnBack_S2:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        Fill: =RGBA(166, 166, 166, 1)
+                        OnSelect: =Navigate(Screen1_ServiceDetails_1)
+                        Text: ="Back"
+                  - btnNext_S2:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        OnSelect: =Navigate(Screen3_Procurement)
+                        Text: ="Next"

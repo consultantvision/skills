@@ -137,3 +137,11 @@ Use `LayoutMinHeight` and `LayoutMaxHeight` to enforce fixed sizes in auto-layou
 ## Reference
 
 For detailed syntax rules, see [syntax-guide.md](syntax-guide.md).
+
+## Full Examples
+
+For complete, working screen examples demonstrating these patterns, see:
+
+* [Screen1_ServiceDetails_Refined.yaml](../../PowerFx%20Low%20code/Examples/Screen1_ServiceDetails_Refined.yaml)
+* [Screen2_SupplierDetails_Refined.yaml](../../PowerFx%20Low%20code/Examples/Screen2_SupplierDetails_Refined.yaml)
+* [Screen3_Procurement_Refined.yaml](../../PowerFx%20Low%20code/Examples/Screen3_Procurement_Refined.yaml)

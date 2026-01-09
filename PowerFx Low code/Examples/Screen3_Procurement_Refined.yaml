@@ -1,0 +1,174 @@
+Screens:
+  Screen3_Procurement:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+    Children:
+      - MainContainer_S3:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =20
+            PaddingBottom: =20
+            PaddingLeft: =20
+            PaddingRight: =20
+            PaddingTop: =20
+            Width: =Parent.Width
+          Children:
+            - Dashboard_S3:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =140
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =10
+                  LayoutMaxHeight: =115
+                  LayoutMinHeight: =50
+                  PaddingBottom: =10
+                  PaddingLeft: =20
+                  PaddingRight: =20
+                  PaddingTop: =10
+                Children:
+                  - lblTitle_S3:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        AlignInContainer: =AlignInContainer.Stretch
+                        Color: =RGBA(102, 51, 153, 1)
+                        FontWeight: =FontWeight.Bold
+                        Size: =20
+                        Text: ="New Supplier Onboarding Request"
+                  - conSteps_S3:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =40
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMaxHeight: =60
+                        LayoutMinHeight: =50
+                      Children:
+                        - lblStep1_S3_Gray:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(166, 166, 166, 1)
+                              Text: ="1. Service Details"
+                        - lblStep2_S3_Gray:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(166, 166, 166, 1)
+                              Text: ="2. Admin & Supplier"
+                        - lblStep3_S3:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(102, 51, 153, 1)
+                              FontWeight: =FontWeight.Bold
+                              Text: ="3. Procurement"
+            - ScrollContent_S3:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =20
+                  LayoutOverflowY: =LayoutOverflow.Scroll
+                Children:
+                  - Header_Procurement_S3:
+                      Control: Label@2.5.1
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        Color: =RGBA(255, 255, 255, 1)
+                        Fill: =RGBA(102, 51, 153, 1)
+                        FontWeight: =FontWeight.Bold
+                        PaddingLeft: =10
+                        Size: =16
+                        Text: ="Procurement Considerations"
+                  - conProcurement_4:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =10
+                      Children:
+                        - lblExistingContract_4:
+                            Control: Label@2.5.1
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FontWeight: =FontWeight.Bold
+                              Text: ="Covered under existing contract/MOU? *"
+                        - radExistingContract_4:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Height: =70
+                              Items: =["Yes", "No"]
+                              Layout: =Layout.Horizontal
+                        - lblQuotationAttached_4:
+                            Control: Label@2.5.1
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FontWeight: =FontWeight.Bold
+                              Text: ="Quotation/Fee Schedule attached? *"
+                        - radQuotationAttached_4:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Height: =70
+                              Items: =["Yes", "No"]
+                              Layout: =Layout.Horizontal
+                        - lblApprovalObtained_4:
+                            Control: Label@2.5.1
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              FontWeight: =FontWeight.Bold
+                              Text: ="If outside scope, approval obtained? *"
+                        - radApprovalObtained_4:
+                            Control: Radio@0.0.25
+                            Properties:
+                              Height: =70
+                              Items: =["Yes", "No"]
+                              Layout: =Layout.Horizontal
+            - Footer_S3:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                  PaddingLeft: =20
+                  PaddingRight: =20
+                Children:
+                  - btnBack_S3:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        Fill: =RGBA(166, 166, 166, 1)
+                        OnSelect: =Navigate(Screen2_SupplierDetails)
+                        Text: ="Back"
+                  - btnSubmit_4:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        DisplayMode: |
+                          =If(
+                              IsBlank(txtReason_5.Text) || IsBlank(txtServiceType_5.Text),
+                              DisplayMode.Disabled,
+                              DisplayMode.Edit
+                          )
+                        OnSelect: |
+                          =Collect(
+                              colSupplierRequests,
+                              {
+                                  Title: "New Request",
+                                  Reason: txtReason_5.Text,
+                                  ServiceType: txtServiceType_5.Text,
+                                  Description: txtDescription_5.Text,
+                                  Urgent: radUrgent_5.Selected.Value,
+                                  SupplierName: txtSupplierName_4.Text,
+                                  ContactEmail: txtContactEmail_4.Text
+                              }
+                          );
+                          Notify("Request Submitted Successfully", NotificationType.Success);
+                          Navigate(Screen1_ServiceDetails_1)
+                        Text: ="Submit Request"
