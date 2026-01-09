@@ -1,11 +1,11 @@
 Screens:
-  SupplierFormScreen_1:
+  SupplierFormScreen_2:
     Properties:
       Fill: =RGBA(255, 255, 255, 1)
       OnVisible: |
         =UpdateContext({ varCurrentTab: "Service Details" });
     Children:
-      - MainContainer_1:
+      - MainContainer_2:
           Control: GroupContainer@1.3.0
           Variant: AutoLayout
           Properties:
@@ -15,17 +15,225 @@ Screens:
             LayoutDirection: =LayoutDirection.Vertical
             Width: =1350
           Children:
-            - HeaderLabel_1:
-                Control: Label@2.5.1
+            - DashboardContainer_1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
                 Properties:
-                  Align: =Align.Center
-                  Color: =RGBA(255, 255, 255, 1)
-                  Fill: =RGBA(0, 120, 212, 1)
-                  FontWeight: =FontWeight.Bold
-                  Height: =60
-                  Size: =24
-                  Text: ="New Supplier Onboarding Request"
-            - TabContainer_1:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =180
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =20
+                  LayoutMaxHeight: =260
+                  LayoutMinHeight: =90
+                  PaddingBottom: =20
+                  PaddingLeft: =30
+                  PaddingRight: =30
+                  PaddingTop: =20
+                  Width: =Parent.Width - 40
+                Children:
+                  - lblDashTitle_1:
+                      Control: Label@2.5.1
+                      Properties:
+                        AlignInContainer: =AlignInContainer.Stretch
+                        AutoHeight: =true
+                        Color: =RGBA(102, 51, 153, 1)
+                        DisplayMode: =DisplayMode.View
+                        FillPortions: =1
+                        FontWeight: =FontWeight.Bold
+                        Size: =24
+                        Text: ="New Supplier Onboarding Request"
+                  - conProgressSteps_1:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        FillPortions: =0
+                        Height: =100
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                        Width: =Parent.Width - 60
+                      Children:
+                        - conStep1_1:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutMaxHeight: =90
+                              LayoutMinHeight: =80
+                              Width: =250
+                            Children:
+                              - icoStep1_1:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(102, 51, 153, 1)
+                                    Height: =40
+                                    Icon: =Icon.CheckBadge
+                                    Width: =40
+                              - conStep1Text_1:
+                                  Control: GroupContainer@1.3.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    Height: =90
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutMaxHeight: =80
+                                    LayoutMinHeight: =70
+                                  Children:
+                                    - lblStep1Name_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Color: =RGBA(102, 51, 153, 1)
+                                          FontWeight: =FontWeight.Semibold
+                                          Size: =14
+                                          Text: ="Service Details"
+                                    - lblStep1Status_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Color: =RGBA(0, 128, 0, 1)
+                                          Size: =12
+                                          Text: ="COMPLETED"
+                        - conStep2_1:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutMaxHeight: =90
+                              LayoutMinHeight: =80
+                              Width: =250
+                            Children:
+                              - icoStep2_1:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(0, 176, 80, 1)
+                                    Height: =40
+                                    Icon: =Icon.CheckBadge
+                                    Width: =40
+                              - conStep2Text_1:
+                                  Control: GroupContainer@1.3.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutMaxHeight: =90
+                                    LayoutMinHeight: =70
+                                  Children:
+                                    - lblStep2Name_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Color: =RGBA(0, 176, 80, 1)
+                                          FontWeight: =FontWeight.Semibold
+                                          Size: =14
+                                          Text: ="Assessment"
+                                    - lblStep2Status_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Color: =RGBA(0, 176, 80, 1)
+                                          Size: =12
+                                          Text: ="COMPLETED"
+                        - conStep3_1:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutMaxHeight: =90
+                              LayoutMinHeight: =80
+                              Width: =250
+                            Children:
+                              - icoStep3_1:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(0, 176, 80, 1)
+                                    Height: =40
+                                    Icon: =Icon.CheckBadge
+                                    Width: =40
+                              - conStep3Text_1:
+                                  Control: GroupContainer@1.3.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutMaxHeight: =90
+                                    LayoutMinHeight: =70
+                                  Children:
+                                    - lblStep3Name_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Color: =RGBA(0, 176, 80, 1)
+                                          FontWeight: =FontWeight.Semibold
+                                          Size: =14
+                                          Text: ="Supplier Info"
+                                    - lblStep3Status_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Color: =RGBA(0, 176, 80, 1)
+                                          Size: =12
+                                          Text: ="COMPLETED"
+                        - conStep4_1:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutMaxHeight: =90
+                              LayoutMinHeight: =70
+                              Width: =250
+                            Children:
+                              - icoStep4_1:
+                                  Control: Classic/Icon@2.5.0
+                                  Properties:
+                                    Color: =RGBA(255, 255, 255, 1)
+                                    Fill: =RGBA(0, 176, 80, 1)
+                                    Height: =40
+                                    Icon: =Icon.CheckBadge
+                                    Width: =40
+                              - conStep4Text_1:
+                                  Control: GroupContainer@1.3.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutMaxHeight: =90
+                                    LayoutMinHeight: =50
+                                    LayoutMinWidth: =100
+                                  Children:
+                                    - lblStep4Name_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Color: =RGBA(0, 176, 80, 1)
+                                          FontWeight: =FontWeight.Semibold
+                                          Size: =14
+                                          Text: ="Procurement"
+                                    - lblStep4Status_1:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Color: =RGBA(0, 176, 80, 1)
+                                          Size: =12
+                                          Text: ="COMPLETED"
+                  - conProgressBar_1:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMaxHeight: =55
+                        LayoutMinHeight: =25
+                        Width: =Parent.Width - 60
+                      Children:
+                        - rectProgressFill_1:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              Fill: =RGBA(102, 51, 153, 1)
+                              Height: =8
+                              Width: =Parent.Width
+                        - lblProgressText_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Right
+                              Color: =RGBA(100, 100, 100, 1)
+                              Size: =12
+                              Text: ="100% Completed"
+            - TabContainer_2:
                 Control: GroupContainer@1.3.0
                 Variant: AutoLayout
                 Properties:
@@ -37,7 +245,7 @@ Screens:
                   LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
                   LayoutMinHeight: =30
                 Children:
-                  - btnTabService_1:
+                  - btnTabService_2:
                       Control: Button@0.0.45
                       Properties:
                         AlignInContainer: =AlignInContainer.Stretch
@@ -47,7 +255,7 @@ Screens:
                           =UpdateContext({ varCurrentTab: "Service Details" })
                         Text: ="Service Details"
                         Width: =200
-                  - btnTabAssessment_1:
+                  - btnTabAssessment_2:
                       Control: Button@0.0.45
                       Properties:
                         AlignInContainer: =AlignInContainer.Stretch
@@ -55,7 +263,7 @@ Screens:
                         OnSelect: |
                           =UpdateContext({ varCurrentTab: "Assessment" })
                         Text: ="Assessment"
-                  - btnTabSupplier_1:
+                  - btnTabSupplier_2:
                       Control: Button@0.0.45
                       Properties:
                         AlignInContainer: =AlignInContainer.Stretch
@@ -63,7 +271,7 @@ Screens:
                         OnSelect: |
                           =UpdateContext({ varCurrentTab: "Admin & Supplier" })
                         Text: ="Admin & Supplier"
-                  - btnTabProcurement_1:
+                  - btnTabProcurement_2:
                       Control: Button@0.0.45
                       Properties:
                         AlignInContainer: =AlignInContainer.Stretch
@@ -71,273 +279,357 @@ Screens:
                         OnSelect: |
                           =UpdateContext({ varCurrentTab: "Procurement" })
                         Text: ="Procurement"
-            - ContentScrollContainer_1:
+            - ContentScrollContainer_2:
                 Control: GroupContainer@1.3.0
                 Variant: AutoLayout
                 Properties:
                   AlignInContainer: =AlignInContainer.SetByContainer
                   Height: =580
                   LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutOverflowX: =LayoutOverflow.Scroll
                   LayoutOverflowY: =LayoutOverflow.Scroll
                   PaddingLeft: =20
                   PaddingRight: =20
                   Width: =980
                 Children:
-                  - conServiceDetails_1:
+                  - conServiceDetails_2:
                       Control: GroupContainer@1.3.0
                       Variant: AutoLayout
                       Properties:
                         LayoutAlignItems: =LayoutAlignItems.Stretch
-                        LayoutDirection: =LayoutDirection.Vertical
-                        LayoutGap: =15
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =20
+                        LayoutOverflowX: =LayoutOverflow.Scroll
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        LayoutWrap: =true
                         Visible: =varCurrentTab = "Service Details"
                         Width: =940
                       Children:
-                        - lblReason_1:
-                            Control: Label@2.5.1
-                            Properties:
-                              Text: ="Reason for Request *"
-                              Width: =900
-                        - txtReason_1:
-                            Control: Classic/TextInput@2.3.2
-                            Properties:
-                              Height: =80
-                              Mode: =TextInputMode.Multiline
-                              Width: =900
-                        - lblServiceType_1:
-                            Control: Label@2.5.1
-                            Properties:
-                              Text: ="Service Type/Specialty *"
-                              Width: =900
-                        - txtServiceType_1:
-                            Control: Classic/TextInput@2.3.2
-                            Properties:
-                              Width: =900
-                        - lblDescription_1:
-                            Control: Label@2.5.1
-                            Properties:
-                              Text: ="Description of Service *"
-                              Width: =900
-                        - txtDescription_1:
-                            Control: Classic/TextInput@2.3.2
-                            Properties:
-                              Height: =80
-                              Mode: =TextInputMode.Multiline
-                              Width: =900
-                        - lblLocation_1:
-                            Control: Label@2.5.1
-                            Properties:
-                              Text: ="Location / Delivery *"
-                              Width: =900
-                        - cmbLocation_1:
-                            Control: ComboBox@0.0.51
-                            Properties:
-                              Items: =["IDC Onsite", "IDC Offsite", "RD"]
-                              SelectMultiple: =true
-                              Width: =900
-                        - lblUrgent_1:
-                            Control: Label@2.5.1
-                            Properties:
-                              Text: ="Is this an urgent request? *"
-                        - radUrgent_1:
-                            Control: Radio@0.0.25
-                            Properties:
-                              Items: =["Yes", "No"]
-                              Layout: =Layout.Horizontal
-                        - conUrgentReason_1:
+                        - conServiceDetailsLeft_2:
                             Control: GroupContainer@1.3.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.SetByContainer
-                              LayoutDirection: =LayoutDirection.Horizontal
-                              Visible: =radUrgent_1.Selected.Value = "Yes"
+                              FillPortions: =1
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =15
                             Children:
-                              - lblUrgentReason_1:
+                              - lblReason_2:
                                   Control: Label@2.5.1
                                   Properties:
-                                    Text: ="If yes, please explain why"
-                              - txtUrgentReason_1:
+                                    Text: ="Reason for Request *"
+                                    Width: =430
+                              - txtReason_2:
                                   Control: Classic/TextInput@2.3.2
                                   Properties:
+                                    FillPortions: =0
+                                    Height: =80
                                     Mode: =TextInputMode.Multiline
-                        - lblAdditionalSpec_1:
-                            Control: Label@2.5.1
+                                    Width: =430
+                              - lblServiceType_2:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Text: ="Service Type/Specialty *"
+                                    Width: =430
+                              - txtServiceType_2:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    Width: =430
+                              - lblDescription_2:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Text: ="Description of Service *"
+                                    Width: =430
+                              - txtDescription_2:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    FillPortions: =0
+                                    Height: =80
+                                    Mode: =TextInputMode.Multiline
+                                    Width: =430
+                        - conServiceDetailsRight_2:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
                             Properties:
-                              Text: ="Additional / Non-clinical Spec"
-                        - txtAdditionalSpec_1:
-                            Control: Classic/TextInput@2.3.2
-                            Properties:
-                              Mode: =TextInputMode.Multiline
-                  - conAssessment_1:
+                              FillPortions: =1
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =15
+                            Children:
+                              - lblLocation_2:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Text: ="Location / Delivery *"
+                                    Width: =430
+                              - cmbLocation_2:
+                                  Control: ComboBox@0.0.51
+                                  Properties:
+                                    Appearance: ='ComboboxCanvas.Appearance'.FilledLighter
+                                    BasePaletteColor: =RGBA(77, 152, 209, 1)
+                                    Fill: =RGBA(213, 180, 240, 1)
+                                    Font: =Font.'Lato Black'
+                                    FontSize: =14
+                                    Height: =40
+                                    Items: =["IDC Onsite", "IDC Offsite", "RD"]
+                                    SelectMultiple: =true
+                                    Width: =430
+                              - lblUrgent_2:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Text: ="Is this an urgent request? *"
+                                    Width: =430
+                              - radUrgent_2:
+                                  Control: Radio@0.0.25
+                                  Properties:
+                                    Height: =60
+                                    Items: =["Yes", "No"]
+                                    Layout: =Layout.Horizontal
+                                    Width: =430
+                              - conUrgentReason_2:
+                                  Control: GroupContainer@1.3.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =5
+                                    Visible: =radUrgent_2.Selected.Value = "Yes"
+                                    Width: =430
+                                  Children:
+                                    - lblUrgentReason_2:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Text: ="If yes, please explain why"
+                                          Width: =430
+                                    - txtUrgentReason_2:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          Mode: =TextInputMode.Multiline
+                                          Width: =430
+                              - lblAdditionalSpec_2:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Text: ="Additional / Non-clinical Spec"
+                                    Width: =430
+                              - txtAdditionalSpec_2:
+                                  Control: Classic/TextInput@2.3.2
+                                  Properties:
+                                    Height: =50
+                                    Mode: =TextInputMode.Multiline
+                                    Width: =430
+                  - conAssessment_2:
                       Control: GroupContainer@1.3.0
                       Variant: AutoLayout
                       Properties:
                         LayoutDirection: =LayoutDirection.Vertical
                         LayoutGap: =10
+                        LayoutOverflowX: =LayoutOverflow.Scroll
+                        LayoutOverflowY: =LayoutOverflow.Scroll
                         Visible: =varCurrentTab = "Assessment"
                       Children:
-                        - lblPublicProvider_1:
+                        - lblPublicProvider_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Text: ="Is a public provider able to fulfill this? *"
-                        - radPublicProvider_1:
+                        - radPublicProvider_2:
                             Control: Radio@0.0.25
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Items: =["Yes", "No", "N/A"]
                               Layout: =Layout.Horizontal
-                        - conPublicProviderDetails_1:
+                        - conPublicProviderDetails_2:
                             Control: GroupContainer@1.3.0
                             Variant: AutoLayout
                             Properties:
                               LayoutDirection: =LayoutDirection.Horizontal
-                              Visible: =radPublicProvider_1.Selected.Value <> "N/A"
+                              Visible: =radPublicProvider_2.Selected.Value <> "N/A"
                             Children:
-                              - lblPublicProviderDetails_1:
+                              - lblPublicProviderDetails_2:
                                   Control: Label@2.5.1
                                   Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
                                     Text: ="Details (Public Provider)"
-                              - txtPublicProviderDetails_1:
+                                    Width: =250
+                              - txtPublicProviderDetails_2:
                                   Control: Classic/TextInput@2.3.2
                                   Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FillPortions: =1
                                     Mode: =TextInputMode.Multiline
-                        - lblWaitlist_1:
+                        - lblWaitlist_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Text: ="Is the client on a public waitlist? *"
-                        - radWaitlist_1:
+                        - radWaitlist_2:
                             Control: Radio@0.0.25
                             Properties:
                               Items: =["Yes", "No", "N/A"]
                               Layout: =Layout.Horizontal
-                        - lblExistingSupplier_1:
+                        - lblExistingSupplier_2:
                             Control: Label@2.5.1
                             Properties:
                               Text: ="Existing supplier exists? *"
-                        - radExistingSupplier_1:
+                        - radExistingSupplier_2:
                             Control: Radio@0.0.25
                             Properties:
                               Items: =["Yes", "No"]
                               Layout: =Layout.Horizontal
-                  - conSupplier_1:
+                  - conSupplier_2:
                       Control: GroupContainer@1.3.0
                       Variant: AutoLayout
                       Properties:
                         LayoutDirection: =LayoutDirection.Vertical
                         LayoutGap: =10
+                        LayoutOverflowX: =LayoutOverflow.Scroll
+                        LayoutOverflowY: =LayoutOverflow.Scroll
                         Visible: =varCurrentTab = "Admin & Supplier"
                       Children:
-                        - lblSupplierName_1:
+                        - lblSupplierName_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Text: ="Proposed Supplier Name *"
-                        - txtSupplierName_1:
+                        - txtSupplierName_2:
                             Control: Classic/TextInput@2.3.2
-                        - lblContactDetails_1:
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                        - lblContactDetails_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               FontWeight: =FontWeight.Semibold
                               Text: ="Supplier Contact Details"
-                        - conContactDetailsNested_1:
+                        - conContactDetailsNested_2:
                             Control: GroupContainer@1.3.0
                             Variant: AutoLayout
                             Properties:
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =5
                             Children:
-                              - txtContactName_1:
+                              - txtContactName_2:
                                   Control: Classic/TextInput@2.3.2
-                              - txtContactRole_1:
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FillPortions: =1
+                              - txtContactRole_2:
                                   Control: Classic/TextInput@2.3.2
-                              - txtContactPhone_1:
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                              - txtContactPhone_2:
                                   Control: Classic/TextInput@2.3.2
-                              - txtContactEmail_1:
+                              - txtContactEmail_2:
                                   Control: Classic/TextInput@2.3.2
-                              - txtContactAddress_1:
+                              - txtContactAddress_2:
                                   Control: Classic/TextInput@2.3.2
-                        - lblABN_1:
+                        - lblABN_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Text: ="ABN/ACN (if known)"
-                        - txtABN_1:
+                        - txtABN_2:
                             Control: Classic/TextInput@2.3.2
-                        - lblPreexisting_1:
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                        - lblPreexisting_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Text: ="Relates to preexisting supplier? *"
-                        - radPreexisting_1:
+                        - radPreexisting_2:
                             Control: Radio@0.0.25
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Items: =["Yes", "No"]
                               Layout: =Layout.Horizontal
-                        - lblContractDuration_1:
+                        - lblContractDuration_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Text: ="Estimated contract duration *"
-                        - txtContractDuration_1:
+                        - txtContractDuration_2:
                             Control: Classic/TextInput@2.3.2
-                        - lblEstimatedSpend_1:
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                        - lblEstimatedSpend_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Text: ="Estimated Spend / Frequency"
-                        - txtEstimatedSpend_1:
+                        - txtEstimatedSpend_2:
                             Control: Classic/TextInput@2.3.2
-                  - conProcurement_1:
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                  - conProcurement_2:
                       Control: GroupContainer@1.3.0
                       Variant: AutoLayout
                       Properties:
                         LayoutDirection: =LayoutDirection.Vertical
                         LayoutGap: =10
+                        LayoutOverflowX: =LayoutOverflow.Scroll
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        LayoutWrap: =true
                         Visible: =varCurrentTab = "Procurement"
                       Children:
-                        - lblExistingContract_1:
+                        - lblExistingContract_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Text: ="Covered under existing contract/MOU? *"
-                        - radExistingContract_1:
+                        - radExistingContract_2:
                             Control: Radio@0.0.25
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              Height: =70
                               Items: =["Yes", "No"]
                               Layout: =Layout.Horizontal
-                        - lblQuotationAttached_1:
+                        - lblQuotationAttached_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Text: ="Quotation/Fee Schedule attached? *"
-                        - radQuotationAttached_1:
+                        - radQuotationAttached_2:
                             Control: Radio@0.0.25
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              Height: =70
                               Items: =["Yes", "No"]
                               Layout: =Layout.Horizontal
-                        - lblApprovalObtained_1:
+                        - lblApprovalObtained_2:
                             Control: Label@2.5.1
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               Text: ="If outside scope, approval obtained? *"
-                        - radApprovalObtained_1:
+                        - radApprovalObtained_2:
                             Control: Radio@0.0.25
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              Height: =70
                               Items: =["Yes", "No"]
                               Layout: =Layout.Horizontal
-                        - btnSubmit_1:
+                        - btnSubmit_2:
                             Control: Button@0.0.45
                             Properties:
+                              AlignInContainer: =AlignInContainer.End
                               DisplayMode: |
                                 =If(
-                                    IsBlank(txtReason_1.Text) || IsBlank(txtServiceType_1.Text),
+                                    IsBlank(txtReason_2.Text) || IsBlank(txtServiceType_2.Text),
                                     DisplayMode.Disabled,
                                     DisplayMode.Edit
                                 )
+                              Height: =50
                               OnSelect: |
                                 =Collect(
                                     colSupplierRequests,
                                     {
                                         Title: "New Request",
-                                        Reason: txtReason_1.Text,
-                                        ServiceType: txtServiceType_1.Text,
-                                        Description: txtDescription_1.Text,
-                                        Urgent: radUrgent_1.Selected.Value,
-                                        SupplierName: txtSupplierName_1.Text,
-                                        ContactEmail: txtContactEmail_1.Text
+                                        Reason: txtReason_2.Text,
+                                        ServiceType: txtServiceType_2.Text,
+                                        Description: txtDescription_2.Text,
+                                        Urgent: radUrgent_2.Selected.Value,
+                                        SupplierName: txtSupplierName_2.Text,
+                                        ContactEmail: txtContactEmail_2.Text
                                     }
                                 );
                                 Notify("Request Submitted Successfully", NotificationType.Success);
-                                Navigate(SuccessScreen)
+                                Navigate(SupplierFormScreen_1)
                               Text: ="Submit Request"
+                              Width: =120
