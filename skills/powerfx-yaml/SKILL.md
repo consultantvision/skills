@@ -10,116 +10,130 @@ This skill enables the generation of syntactically correct PowerFx YAML code for
 
 ## Critical Syntax Rules
 
-1. **Control Definition**: ALWAYS use the `Control:` key with specific versions (e.g., `Button@0.0.45`) to ensure compatibility.
-2. **Formulas with Colons**: Use block scalars (`|`) for any formula containing `:` (e.g., `UpdateContext`, `If`).
+1. **Block Scalars for Colons**: ALWAYS use block scalars (`|`) for formulas containing colons (e.g., `UpdateContext`, `If`, records) to avoid YAML parsing errors (PA1001).
+
+    ```yaml
+    OnVisible: |
+      =UpdateContext({ varStep: 1 })
+    ```
+
+2. **Control Definition & Versioning**: Use tested, specific versions or valid namespaces.
+    * **Containers**: Use `GroupContainer@1.4.0` (avoid deprecated 1.3.0).
+    * **Buttons**: Use `Classic/Button` (supports `Fill`).
+    * **Text Inputs**: Use `Classic/TextInput@2.3.2`.
+    * **Radio**: Use `Radio@0.0.25`.
+    * **ComboBox**: Use `ComboBox@0.0.51`.
 3. **Leading `=`**: All property expressions MUST start with `=`.
-4. **Properties Block**: Controls must have a `Properties:` section for their attributes.
-5. **Unique Names**: Ensure all control names are unique across the screen (suffixing with `_1` or similar is a good practice).
+4. **Properties Block**: Controls must have a `Properties:` section.
 
-## Control Types Reference
+## Root Structure
 
-### Standard Controls (Use Specific Versions)
+Define multiple screens under a `Screens:` key.
+
 ```yaml
-- btnSubmit_1:
-    Control: Button@0.0.45
+Screens:
+  Screen1_Name:
     Properties:
-      Text: ="Submit"
-      OnSelect: |
-        =Notify("Saved")
-
-- lblTitle_1:
-    Control: Label@2.5.1
-    Properties:
-      Text: ="Welcome"
-      FontWeight: =FontWeight.Bold
-
-- radChoice_1:
-    Control: Radio@0.0.25
-    Properties:
-      Items: =["Yes", "No"]
-      Layout: =Layout.Horizontal
-
-- cmbOptions_1:
-    Control: ComboBox@0.0.51
-    Properties:
-      Items: =["Option 1", "Option 2"]
-      SelectMultiple: =true
-```
-
-### Form Inputs
-Use `Classic/TextInput@2.3.2` for text fields to ensure access to properties like `Mode`.
-```yaml
-- txtName_1:
-    Control: Classic/TextInput@2.3.2
-    Properties:
-      Mode: =TextInputMode.Multiline
-      Height: =100
-```
-**Important**: Do NOT use `Default`, `DefaultValue`, `Hint`, or `HintText` property keys directly if they are not supported by the schema version. Use `Value:` for input text.
-
-### Visual Shapes & Icons
-```yaml
-- rectSeparator_1:
-    Control: Rectangle@2.3.0
-    Properties:
-      Fill: =RGBA(100, 100, 100, 1)
-      Height: =1
-
-- icoStatus_1:
-    Control: Classic/Icon
-    Properties:
-      Icon: =Icon.CheckBadge
-      Color: =RGBA(0, 128, 0, 1)
-```
-
-### Layout & Containers
-Always use `GroupContainer@1.3.0` with `Variant: AutoLayout`.
-```yaml
-- MainContainer_1:
-    Control: GroupContainer@1.3.0
-    Variant: AutoLayout
-    Properties:
-      LayoutDirection: =LayoutDirection.Vertical
-      LayoutGap: =16
-      LayoutAlignItems: =LayoutAlignItems.Stretch
-      LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
-    Children:
-      - ChildControl_1:
-          Control: Label@2.5.1
-          Properties:
-            AlignInContainer: =AlignInContainer.Stretch
-            FillPortions: =1
-```
-
-## Common Patterns
-
-### Dashboard Cards
-Create cards using containers with DropShadow and generic visual styling.
-```yaml
-- DashboardCard_1:
-    Control: GroupContainer@1.3.0
-    Variant: AutoLayout
-    Properties:
-      DropShadow: =DropShadow.Light
       Fill: =RGBA(255, 255, 255, 1)
-      PaddingLeft: =20
-      PaddingRight: =20
+    Children:
+      - MainContainer: ...
+  Screen2_Name: ...
 ```
 
-### Tab Navigation
+## Layout Patterns
+
+### Split Column Layout (50/50)
+
+Use a horizontal parent container with two vertical child containers, both set to `FillPortions: =1`.
+
 ```yaml
-- TabContainer_1:
-    Control: GroupContainer@1.3.0
+- conRow:
+    Control: GroupContainer@1.4.0
     Variant: AutoLayout
     Properties:
       LayoutDirection: =LayoutDirection.Horizontal
+      LayoutGap: =20
     Children:
-      - btnTab1_1:
-          Control: Button@0.0.45
+      - conLeft:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
           Properties:
-             Text: ="Tab 1"
-             OnSelect: |=UpdateContext({ varTab: "Tab1" })
+            LayoutDirection: =LayoutDirection.Vertical
+            FillPortions: =1
+      - conRight:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            LayoutDirection: =LayoutDirection.Vertical
+            FillPortions: =1
 ```
 
+### Fixed Height Headers/Dashboards
+
+Use `LayoutMinHeight` and `LayoutMaxHeight` to enforce fixed sizes in auto-layout.
+
+```yaml
+- Dashboard:
+    Control: GroupContainer@1.4.0
+    Variant: AutoLayout
+    Properties:
+      LayoutDirection: =LayoutDirection.Vertical
+      LayoutMinHeight: =50
+      LayoutMaxHeight: =120
+```
+
+## Control Types Reference
+
+### Buttons & Navigation
+
+```yaml
+- btnNext:
+    Control: Classic/Button
+    Properties:
+      Text: ="Next"
+      OnSelect: =Navigate(Screen2_Name)
+```
+
+### Form Inputs
+
+`Classic/TextInput@2.3.2` supports `HintText` and `Mode`.
+
+```yaml
+- txtAddress:
+    Control: Classic/TextInput@2.3.2
+    Properties:
+      HintText: ="Enter Address"
+      Mode: =TextInputMode.Multiline
+      Height: =60
+```
+
+### Radio & Selection
+
+```yaml
+- radOption:
+    Control: Radio@0.0.25
+    Properties:
+      Items: =["Option A", "Option B"]
+      Layout: =Layout.Horizontal
+```
+
+## Error Handling Guide
+
+### PA1001: YamlInvalidSyntax
+
+**Cause**: Presence of `:` in single-line formula without quoting or block scalar.
+**Fix**: Convert to block scalar (`|`).
+
+### PA2108: Unknown Property 'Fill'
+
+**Cause**: Modern controls often lack styling properties like `Fill`.
+**Fix**: Use `Classic/Button` namespace.
+
+### PA2105/PA2107: Version Conflicts
+
+**Cause**: Mixing control versions (e.g., `GroupContainer@1.3.0` vs `1.4.0`).
+**Fix**: standardize on `GroupContainer@1.4.0` globally.
+
 ## Reference
+
 For detailed syntax rules, see [syntax-guide.md](syntax-guide.md).
