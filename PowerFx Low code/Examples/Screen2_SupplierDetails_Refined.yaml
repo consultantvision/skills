@@ -28,8 +28,8 @@ Screens:
                   Height: =140
                   LayoutDirection: =LayoutDirection.Vertical
                   LayoutGap: =10
-                  LayoutMaxHeight: =120
-                  LayoutMinHeight: =50
+                  LayoutMaxHeight: =200
+                  LayoutMinHeight: =100
                   PaddingBottom: =10
                   PaddingLeft: =20
                   PaddingRight: =20
@@ -44,32 +44,168 @@ Screens:
                         FontWeight: =FontWeight.Bold
                         Size: =20
                         Text: ="New Supplier Onboarding Request"
-                  - conSteps_S2:
+                  - conProgressHeader_S2:
                       Control: GroupContainer@1.4.0
                       Variant: AutoLayout
                       Properties:
-                        LayoutDirection: =LayoutDirection.Horizontal
-                        LayoutGap: =40
-                        LayoutJustifyContent: =LayoutJustifyContent.Center
-                        LayoutMaxHeight: =50
-                        LayoutMinHeight: =50
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =10
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
                       Children:
-                        - lblStep1_S2_Gray:
+                        - conStepCards_S2:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              Height: =60
+                            Children:
+                              - conStep1_Card:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =1
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    BorderColor: =RGBA(0, 128, 0, 1)
+                                    BorderThickness: =1
+                                    PaddingLeft: =10
+                                    PaddingRight: =10
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                  Children:
+                                    - icoStep1_Check:
+                                        Control: Classic/Icon
+                                        Properties:
+                                          Icon: =Icon.CheckBadge
+                                          Color: =RGBA(0, 128, 0, 1)
+                                          Width: =32
+                                          Height: =32
+                                    - conStep1_Text:
+                                        Control: GroupContainer@1.4.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =0
+                                          LayoutJustifyContent: =LayoutJustifyContent.Center
+                                        Children:
+                                          - lblStep1_Title:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Text: ="Service Details"
+                                                Color: =RGBA(102, 51, 153, 1)
+                                                FontWeight: =FontWeight.Bold
+                                                Size: =10
+                                          - lblStep1_Status:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Text: ="COMPLETED"
+                                                Color: =RGBA(0, 128, 0, 1)
+                                                Size: =10
+                              - conStep2_Card:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =1
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    BorderColor: =RGBA(102, 51, 153, 1)
+                                    BorderThickness: =2
+                                    PaddingLeft: =10
+                                    PaddingRight: =10
+                                    Fill: =RGBA(255, 255, 255, 1)
+                                  Children:
+                                    - icoStep2_Check:
+                                        Control: Classic/Icon
+                                        Properties:
+                                          Icon: =Icon.Circle
+                                          Color: =RGBA(102, 51, 153, 1)
+                                          Width: =32
+                                          Height: =32
+                                    - conStep2_Text:
+                                        Control: GroupContainer@1.4.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =0
+                                          LayoutJustifyContent: =LayoutJustifyContent.Center
+                                        Children:
+                                          - lblStep2_Title:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Text: ="Admin & Supplier"
+                                                Color: =RGBA(102, 51, 153, 1)
+                                                FontWeight: =FontWeight.Bold
+                                                Size: =10
+                                          - lblStep2_Status:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Text: ="IN PROGRESS"
+                                                Color: =RGBA(102, 51, 153, 1)
+                                                Size: =10
+                              - conStep3_Card:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =1
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    BorderColor: =RGBA(200, 200, 200, 1)
+                                    BorderThickness: =1
+                                    PaddingLeft: =10
+                                    PaddingRight: =10
+                                    Fill: =RGBA(250, 250, 250, 1)
+                                  Children:
+                                    - icoStep3_Check:
+                                        Control: Classic/Icon
+                                        Properties:
+                                          Icon: =Icon.Circle
+                                          Color: =RGBA(166, 166, 166, 1)
+                                          Width: =32
+                                          Height: =32
+                                    - conStep3_Text:
+                                        Control: GroupContainer@1.4.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =0
+                                          LayoutJustifyContent: =LayoutJustifyContent.Center
+                                        Children:
+                                          - lblStep3_Title:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Text: ="Procurement"
+                                                Color: =RGBA(166, 166, 166, 1)
+                                                FontWeight: =FontWeight.Bold
+                                                Size: =10
+                                          - lblStep3_Status:
+                                              Control: Label@2.5.1
+                                              Properties:
+                                                Text: ="PENDING"
+                                                Color: =RGBA(166, 166, 166, 1)
+                                                Size: =10
+                        - conProgressBar_Wrapper:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutDirection: =LayoutDirection.Vertical
+                              Height: =20
+                              Fill: =RGBA(240, 240, 240, 1)
+                            Children:
+                              - rectProgressBar:
+                                  Control: Rectangle
+                                  Properties:
+                                    Fill: =RGBA(102, 51, 153, 1)
+                                    Width: =Parent.Width * 0.5
+                                    Height: =Parent.Height
+                        - lblProgressPercent:
                             Control: Label@2.5.1
                             Properties:
-                              Color: =RGBA(166, 166, 166, 1)
-                              Text: ="1. Service Details"
-                        - lblStep2_S2:
-                            Control: Label@2.5.1
-                            Properties:
+                              Text: ="50% Completed"
+                              Size: =10
                               Color: =RGBA(102, 51, 153, 1)
-                              FontWeight: =FontWeight.Bold
-                              Text: ="2. Admin & Supplier"
-                        - lblStep3_S2_Gray:
-                            Control: Label@2.5.1
-                            Properties:
-                              Color: =RGBA(166, 166, 166, 1)
-                              Text: ="3. Procurement"
             - ScrollContent_S2:
                 Control: GroupContainer@1.4.0
                 Variant: AutoLayout
