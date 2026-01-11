@@ -233,12 +233,22 @@ Screens:
                                                       Width: =80
                                                       FontWeight: =FontWeight.Bold
                                                       VerticalAlign: =VerticalAlign.Top
-                                                - txtContactAddress_4:
-                                                    Control: Classic/TextInput@2.3.2
+                                                - conAddressInputs_4:
+                                                    Control: GroupContainer@1.4.0
+                                                    Variant: AutoLayout
                                                     Properties:
-                                                      Height: =60
-                                                      Mode: =TextInputMode.Multiline
+                                                      LayoutDirection: =LayoutDirection.Vertical
+                                                      LayoutGap: =5
                                                       FillPortions: =1
+                                                    Children:
+                                                      - txtContactAddressLine1_4:
+                                                          Control: Classic/TextInput@2.3.2
+                                                          Properties:
+                                                            HintText: ="Address Line 1"
+                                                      - txtContactAddressLine2_4:
+                                                          Control: Classic/TextInput@2.3.2
+                                                          Properties:
+                                                            HintText: ="Address Line 2"
                         - conSupplierRight_2:
                             Control: GroupContainer@1.4.0
                             Variant: AutoLayout
