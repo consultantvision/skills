@@ -1,11 +1,11 @@
 Screens:
-  Screen1_ServiceDetails_1:
+  Screen1_ServiceDetails_2:
     Properties:
       Fill: =RGBA(255, 255, 255, 1)
       OnVisible: |
         =UpdateContext({ varCurrentStep: 1 })
     Children:
-      - MainContainer_S1_1:
+      - MainContainer_S1_2:
           Control: GroupContainer@1.4.0
           Variant: AutoLayout
           Properties:
@@ -20,7 +20,7 @@ Screens:
             PaddingTop: =10
             Width: =Parent.Width
           Children:
-            - Dashboard_S1_1:
+            - Dashboard_S1_2:
                 Control: GroupContainer@1.4.0
                 Variant: AutoLayout
                 Properties:
@@ -35,7 +35,7 @@ Screens:
                   PaddingRight: =20
                   PaddingTop: =10
                 Children:
-                  - lblTitle_S1_1:
+                  - lblTitle_S1_2:
                       Control: Label@2.5.1
                       Properties:
                         Align: =Align.Center
@@ -44,33 +44,34 @@ Screens:
                         FontWeight: =FontWeight.Bold
                         Size: =20
                         Text: ="New Supplier Onboarding Request"
-                  - conSteps_S1_1:
+                  - conSteps_S1_2:
                       Control: GroupContainer@1.4.0
                       Variant: AutoLayout
                       Properties:
+                        Fill: =RGBA(241, 244, 249, 1)
                         LayoutDirection: =LayoutDirection.Horizontal
                         LayoutGap: =40
                         LayoutJustifyContent: =LayoutJustifyContent.Center
                         LayoutMaxHeight: =50
                         LayoutMinHeight: =50
                       Children:
-                        - lblStep1_S1_1:
+                        - lblStep1_S1_2:
                             Control: Label@2.5.1
                             Properties:
                               Color: =RGBA(102, 51, 153, 1)
                               FontWeight: =FontWeight.Bold
                               Text: ="1. Service Details"
-                        - lblStep2_S1_Gray_1:
+                        - lblStep2_S1_Gray_2:
                             Control: Label@2.5.1
                             Properties:
                               Color: =RGBA(166, 166, 166, 1)
                               Text: ="2. Admin & Supplier"
-                        - lblStep3_S1_Gray_1:
+                        - lblStep3_S1_Gray_2:
                             Control: Label@2.5.1
                             Properties:
                               Color: =RGBA(166, 166, 166, 1)
                               Text: ="3. Procurement"
-            - ScrollContent_S1_1:
+            - ScrollContent_S1_2:
                 Control: GroupContainer@1.4.0
                 Variant: AutoLayout
                 Properties:
@@ -78,17 +79,249 @@ Screens:
                   LayoutGap: =20
                   LayoutOverflowY: =LayoutOverflow.Scroll
                 Children:
-                  - conFields_S1_1:
+                  - conFields_S1_2:
                       Control: GroupContainer@1.4.0
                       Variant: AutoLayout
                       Properties:
                         LayoutDirection: =LayoutDirection.Horizontal
-                        LayoutGap: =20
+                        LayoutGap: =15
                         PaddingLeft: =20
                         PaddingRight: =20
                         Width: =Parent.Width - 40
                       Children:
-                        - conFieldsLeft_S1_1:
+                        - conFieldsLeft_S1_2:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =10
+                              LayoutOverflowY: =LayoutOverflow.Scroll
+                              Width: =Parent.Width
+                            Children:
+                              - conRow_Reason_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMinHeight: =60
+                                  Children:
+                                    - lblReason_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          AutoHeight: =true
+                                          Fill: =RGBA(226, 209, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =Parent.Height
+                                          PaddingTop: =15
+                                          Size: =12
+                                          Text: ="Reason for Request"
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =225
+                                    - txtReason_6:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          FillPortions: =1
+                                          Mode: =TextInputMode.Multiline
+                                          PaddingBottom: =0
+                                          PaddingTop: =0
+                                          Size: =12
+                              - conRow_ServiceType_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMinHeight: =60
+                                  Children:
+                                    - lblServiceType_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          Fill: =RGBA(226, 209, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          Size: =12
+                                          Text: ="Service Type/Specialty"
+                                          Width: =225
+                                    - txtServiceType_6:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          FillPortions: =1
+                              - conRow_Description_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMinHeight: =60
+                                  Children:
+                                    - lblDescription_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          Fill: =RGBA(226, 209, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =50
+                                          PaddingTop: =15
+                                          Size: =12
+                                          Text: ="Description of Service Required"
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =225
+                                    - txtDescription_6:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          FillPortions: =1
+                                          Mode: =TextInputMode.Multiline
+                              - conRow_Location_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMinHeight: =60
+                                  Children:
+                                    - lblLocation_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Fill: =RGBA(226, 209, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          PaddingTop: =15
+                                          Size: =12
+                                          Text: ="Location / Delivery Requirements"
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =225
+                                    - radWaitlist_7:
+                                        Control: Radio@0.0.25
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          DefaultSelectedItems: =[]
+                                          FillPortions: =1
+                                          Height: =50
+                                          Items: =["IDC Onsite", "IDC Offsite", "RD"]
+                                          Layout: ='RadioGroupCanvas.Layout'.Horizontal
+                              - conRow_LocationDetails_3:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMinHeight: =60
+                                  Children:
+                                    - lblLocationDetails_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          Fill: =RGBA(215, 223, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          PaddingLeft: =35
+                                          PaddingTop: =15
+                                          Size: =11
+                                          Text: ="Details"
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =225
+                                    - txtLocationDetails_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          FillPortions: =1
+                                          Mode: =TextInputMode.Multiline
+                              - conRow_Referral_3:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMinHeight: =50
+                                  Children:
+                                    - lblReferral_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          Fill: =RGBA(226, 209, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          PaddingTop: =15
+                                          Size: =12
+                                          Text: ="Origin of Referral"
+                                          Width: =225
+                                    - txtReferral_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          FillPortions: =1
+                              - conRow_PublicProvider_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMinHeight: =65
+                                  Children:
+                                    - lblPublicProvider_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          AutoHeight: =true
+                                          Fill: =RGBA(226, 209, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          PaddingTop: =15
+                                          Size: =12
+                                          Text: ="Is a public provider able to fulfill this requirement"
+                                          Width: =225
+                                    - radPublicProvider_6:
+                                        Control: Radio@0.0.25
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          DefaultSelectedItems: =[]
+                                          FillPortions: =1
+                                          Height: =40
+                                          Items: =["Yes", "No", "N/A"]
+                                          Layout: ='RadioGroupCanvas.Layout'.Horizontal
+                              - conRow_PublicProviderDetails_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.SetByContainer
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMinHeight: =50
+                                  Children:
+                                    - lblPublicProviderDetails_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          Fill: =RGBA(215, 223, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          PaddingLeft: =35
+                                          PaddingTop: =15
+                                          Size: =11
+                                          Text: ="Details"
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =225
+                                    - txtPublicProviderDetails_6:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          FillPortions: =1
+                                          Mode: =TextInputMode.Multiline
+                        - conFieldsRight_S1_2:
                             Control: GroupContainer@1.4.0
                             Variant: AutoLayout
                             Properties:
@@ -96,198 +329,225 @@ Screens:
                               LayoutGap: =15
                               LayoutOverflowY: =LayoutOverflow.Scroll
                             Children:
-                              - lblReason_5:
-                                  Control: Label@2.5.1
+                              - conRow_Waitlist_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="1. Reason for Request *"
-                              - txtReason_5:
-                                  Control: Classic/TextInput@2.3.2
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMaxHeight: =60
+                                    LayoutMinHeight: =50
+                                  Children:
+                                    - lblWaitlist_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AutoHeight: =true
+                                          Fill: =RGBA(226, 209, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          Text: ="Is the client on a public waitlist"
+                                          Width: =225
+                                    - radWaitlist_6:
+                                        Control: Radio@0.0.25
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          DefaultSelectedItems: =[]
+                                          FillPortions: =1
+                                          Height: =50
+                                          Items: =["Yes", "No", "N/A"]
+                                          Layout: ='RadioGroupCanvas.Layout'.Horizontal
+                              - conRow_WaitlistNo_3:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    FillPortions: =1
-                                    Height: =50
-                                    Mode: =TextInputMode.Multiline
-                                    Width: |+
-                                      =Parent.Width - 10
-                              - lblServiceType_5:
-                                  Control: Label@2.5.1
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMaxHeight: =60
+                                    LayoutMinHeight: =60
+                                    Visible: |-
+                                      =If(
+                                          radWaitlist_6.Selected.Value = "N/A" Or radWaitlist_6.Selected.Value = Blank(),
+                                          false,
+                                          true
+                                      )
+                                  Children:
+                                    - lblWaitlistNo_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          AutoHeight: =true
+                                          Fill: =RGBA(215, 223, 240, 1)
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =50
+                                          LayoutMaxWidth: =230
+                                          PaddingLeft: =25
+                                          Size: =12
+                                          Text: =Switch(radWaitlist_6.Selected.Value,"Yes","If yes, please provide hospital or relevant details","No","If no, please explain why")
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =225
+                                    - txtWaitlistNo_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          FillPortions: =1
+                                          Height: =60
+                                          Mode: =TextInputMode.Multiline
+                                          Size: =12
+                              - conRow_ExistingSupplier_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="2. Service Type/Specialty *"
-                              - txtServiceType_5:
-                                  Control: Classic/TextInput@2.3.2
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMaxHeight: =60
+                                    LayoutMinHeight: =65
+                                  Children:
+                                    - lblExistingSupplier_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          Fill: =RGBA(226, 209, 240, 1)
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Bold
+                                          LayoutMaxWidth: =120
+                                          LayoutMinWidth: =230
+                                          Size: =12
+                                          Text: ="Is there an existing supplier that could service this client?"
+                                          Width: =225
+                                    - radExistingSupplier_6:
+                                        Control: Radio@0.0.25
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Center
+                                          DefaultSelectedItems: =[]
+                                          FillPortions: =1
+                                          Height: =50
+                                          Items: =["Yes", "No"]
+                                          Layout: ='RadioGroupCanvas.Layout'.Horizontal
+                              - conRow_ExistingSupptxt:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    Width: =Parent.Width - 10
-                              - lblDescription_5:
-                                  Control: Label@2.5.1
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMaxHeight: =60
+                                    LayoutMinHeight: =60
+                                    Visible: |-
+                                      =If(
+                                          radWaitlist_6.Selected.Value = "N/A",
+                                          false,
+                                          true
+                                      )
+                                  Children:
+                                    - lblWaitlistNo_5:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          AutoHeight: =true
+                                          Fill: =RGBA(215, 223, 240, 1)
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Bold
+                                          Height: =50
+                                          LayoutMaxWidth: =230
+                                          PaddingLeft: =25
+                                          Size: =11
+                                          Text: |-
+                                            ="If yes, please explain why they’ve not been utilised
+                                            "
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =225
+                                    - txtWaitlistNo_5:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          FillPortions: =1
+                                          Height: =60
+                                          Mode: =TextInputMode.Multiline
+                                          Size: =12
+                              - conRow_Urgent_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="3. Description of Service Required *"
-                              - txtDescription_5:
-                                  Control: Classic/TextInput@2.3.2
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMaxHeight: =65
+                                    LayoutMinHeight: =55
+                                  Children:
+                                    - lblUrgent_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          AutoHeight: =true
+                                          Fill: =RGBA(226, 209, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          Size: =12
+                                          Text: ="Is this an urgent request?"
+                                          Width: =225
+                                    - radUrgent_6:
+                                        Control: Radio@0.0.25
+                                        Properties:
+                                          DefaultSelectedItems: =[]
+                                          FillPortions: =1
+                                          Height: =50
+                                          Items: =["Yes", "No"]
+                                          Layout: ='RadioGroupCanvas.Layout'.Horizontal
+                              - conRow_UrgentReason_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    FillPortions: =1
-                                    Height: =100
-                                    Mode: =TextInputMode.Multiline
-                                    Width: =Parent.Width - 10
-                              - lblLocation_5:
-                                  Control: Label@2.5.1
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMaxHeight: =65
+                                    LayoutMinHeight: =60
+                                    Visible: =radUrgent_6.Selected.Value = "Yes"
+                                  Children:
+                                    - lblUrgentReason_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Fill: =RGBA(215, 223, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          PaddingLeft: =15
+                                          Size: =12
+                                          Text: ="If yes, please explain why"
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =225
+                                    - txtUrgentReason_6:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          FillPortions: =1
+                                          Height: =60
+                                          Mode: =TextInputMode.Multiline
+                              - conRow_AdditionalSpec_5:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="4. Location / Delivery Requirements *"
-                              - cmbLocation_5:
-                                  Control: ComboBox@0.0.51
-                                  Properties:
-                                    Items: =["IDC Onsite", "IDC Offsite", "RD"]
-                                    SelectMultiple: =true
-                              - lblLocationDetails_3:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="5. Details"
-                              - txtLocationDetails_3:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    Height: =60
-                                    Mode: =TextInputMode.Multiline
-                                    Width: =Parent.Width - 10
-                              - lblReferral_3:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="6. Origin of Referral"
-                              - txtReferral_3:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    Width: =Parent.Width - 10
-                              - lblPublicProvider_5:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="7. Is a public provider able to fulfill this requirement? *"
-                              - radPublicProvider_5:
-                                  Control: Radio@0.0.25
-                                  Properties:
-                                    Items: =["Yes", "No", "N/A"]
-                                    Layout: =Layout.Horizontal
-                              - lblPublicProviderDetails_5:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="8. Details"
-                              - txtPublicProviderDetails_5:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    Height: =60
-                                    Mode: =TextInputMode.Multiline
-                                    Width: =Parent.Width - 10
-                        - conFieldsRight_S1_1:
-                            Control: GroupContainer@1.4.0
-                            Variant: AutoLayout
-                            Properties:
-                              LayoutDirection: =LayoutDirection.Vertical
-                              LayoutGap: =15
-                              LayoutOverflowY: =LayoutOverflow.Scroll
-                            Children:
-                              - lblWaitlist_5:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="9. Is the client on a public waitlist?"
-                                    Width: =Parent.Width - 10
-                              - radWaitlist_5:
-                                  Control: Radio@0.0.25
-                                  Properties:
-                                    Items: =["Yes", "No", "N/A"]
-                                    Layout: =Layout.Horizontal
-                                    Width: =400
-                              - lblWaitlistYes_3:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="10. If yes, please provide hospital or relevant details"
-                                    Width: =Parent.Width - 10
-                              - txtWaitlistYes_3:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    Height: =60
-                                    Mode: =TextInputMode.Multiline
-                                    Visible: =radWaitlist_5.Selected.Value = "Yes"
-                              - lblWaitlistNo_3:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="11. If no, please explain why"
-                                    Width: =Parent.Width - 10
-                              - txtWaitlistNo_3:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    Height: =60
-                                    Mode: =TextInputMode.Multiline
-                                    Visible: =radWaitlist_5.Selected.Value = "No"
-                              - lblExistingSupplier_5:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="12. Is there an existing supplier that could service this client?"
-                                    Width: =Parent.Width - 10
-                              - radExistingSupplier_5:
-                                  Control: Radio@0.0.25
-                                  Properties:
-                                    Items: =["Yes", "No"]
-                                    Layout: =Layout.Horizontal
-                              - lblExistingSupplierYes_3:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="13. If yes, please explain why they've not been utilised"
-                                    Width: =Parent.Width - 10
-                              - txtExistingSupplierYes_3:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    Height: =60
-                                    Mode: =TextInputMode.Multiline
-                                    Visible: =radExistingSupplier_5.Selected.Value = "Yes"
-                              - lblUrgent_5:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="14. Is this an urgent request? *"
-                                    Width: =Parent.Width - 10
-                              - radUrgent_5:
-                                  Control: Radio@0.0.25
-                                  Properties:
-                                    Items: =["Yes", "No"]
-                                    Layout: =Layout.Horizontal
-                              - lblUrgentReason_5:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="15. If yes, please explain why"
-                                    Width: =Parent.Width - 10
-                              - txtUrgentReason_5:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    Height: =60
-                                    Mode: =TextInputMode.Multiline
-                                    Visible: =radUrgent_5.Selected.Value = "Yes"
-                              - lblAdditionalSpec_5:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="16. Additional / Non-clinical Specification"
-                                    Width: =Parent.Width - 10
-                              - txtAdditionalSpec_5:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    Height: =60
-                                    Mode: =TextInputMode.Multiline
-                                    Width: =Parent.Width - 10
-            - Footer_S1_1:
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutMaxHeight: =70
+                                    LayoutMinHeight: =65
+                                  Children:
+                                    - lblAdditionalSpec_6:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          Fill: =RGBA(226, 209, 240, 1)
+                                          FontWeight: =FontWeight.Bold
+                                          Size: =12
+                                          Text: ="Additional / Non-clinical Specification"
+                                          VerticalAlign: =VerticalAlign.Top
+                                          Width: =225
+                                    - txtAdditionalSpec_6:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          FillPortions: =1
+                                          Height: =60
+                                          Mode: =TextInputMode.Multiline
+            - Footer_S1_2:
                 Control: GroupContainer@1.4.0
                 Variant: AutoLayout
                 Properties:
@@ -298,7 +558,7 @@ Screens:
                   LayoutJustifyContent: =LayoutJustifyContent.End
                   PaddingRight: =20
                 Children:
-                  - btnNext_S1_1:
+                  - btnNext_S1_2:
                       Control: Classic/Button@2.2.0
                       Properties:
                         OnSelect: =Navigate(Screen2_SupplierDetails)

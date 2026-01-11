@@ -80,6 +80,67 @@ Use `LayoutMinHeight` and `LayoutMaxHeight` to enforce fixed sizes in auto-layou
       LayoutDirection: =LayoutDirection.Vertical
       LayoutMinHeight: =50
       LayoutMaxHeight: =120
+
+### Horizontal Field Row (Side-by-Side Label & Input)
+
+Wrap each Label and Input pair in a horizontal container. Set the Label to a fixed width and the Input to `FillPortions: =1`.
+
+```yaml
+- conRow_Field:
+    Control: GroupContainer@1.4.0
+    Variant: AutoLayout
+    Properties:
+      LayoutDirection: =LayoutDirection.Horizontal
+      LayoutGap: =10
+      LayoutAlignItems: =LayoutAlignItems.Center
+    Children:
+      - lblField:
+          Control: Label@2.5.1
+          Properties:
+            Text: ="Field Name"
+            Width: =225
+      - txtField:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            FillPortions: =1
+```
+
+### Nested Sub-Field Groups
+
+For complex forms where a main label covers multiple sub-fields (e.g., "Contact Details" -> Name, Role, Phone), use nested containers.
+
+1. **Parent Container**: Functionally acts as the group wrapper.
+2. **Child Rows**: Nested horizontal containers for each sub-field.
+3. **Label Sizing**: Use smaller fixed widths (e.g., `Width: =80`) for sub-labels to maximize input space.
+
+```yaml
+- conContactDetailsNested:
+    Control: GroupContainer@1.4.0
+    Variant: AutoLayout
+    Properties:
+      LayoutDirection: =LayoutDirection.Vertical
+      LayoutGap: =5
+      FillPortions: =1
+    Children:
+      - conSubRow_Name:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            LayoutDirection: =LayoutDirection.Horizontal
+            LayoutGap: =10
+            LayoutAlignItems: =LayoutAlignItems.Center
+          Children:
+            - lblName:
+                Control: Label@2.5.1
+                Properties:
+                  Text: ="Name"
+                  Width: =80
+            - txtName:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  FillPortions: =1
+```
+
 ```
 
 ## Control Types Reference

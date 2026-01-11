@@ -105,51 +105,140 @@ Screens:
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =15
                             Children:
-                              - lblSupplierName_4:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="Proposed Supplier Name *"
-                              - txtSupplierName_4:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                              - lblContactDetails_4:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="Supplier Contact Details"
-                              - conContactDetailsNested_4:
+                              - conRow_SupplierName_4:
                                   Control: GroupContainer@1.4.0
                                   Variant: AutoLayout
                                   Properties:
-                                    LayoutDirection: =LayoutDirection.Vertical
-                                    LayoutGap: =5
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutAlignItems: =LayoutAlignItems.Center
                                   Children:
-                                    - txtContactName_4:
+                                    - lblSupplierName_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          FontWeight: =FontWeight.Bold
+                                          Text: ="Proposed Supplier Name *"
+                                          Width: =225
+                                    - txtSupplierName_4:
                                         Control: Classic/TextInput@2.3.2
                                         Properties:
-                                          HintText: ="Name"
-                                    - txtContactRole_4:
-                                        Control: Classic/TextInput@2.3.2
+                                          FillPortions: =1
+                              - conRow_ContactDetails_4:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                  Children:
+                                    - lblContactDetails_4:
+                                        Control: Label@2.5.1
                                         Properties:
-                                          HintText: ="Role"
-                                    - txtContactPhone_4:
-                                        Control: Classic/TextInput@2.3.2
+                                          FontWeight: =FontWeight.Bold
+                                          Text: ="Supplier Contact Details"
+                                          Width: =225
+                                          VerticalAlign: =VerticalAlign.Top
+                                    - conContactDetailsNested_4:
+                                        Control: GroupContainer@1.4.0
+                                        Variant: AutoLayout
                                         Properties:
-                                          HintText: ="Phone"
-                                    - txtContactEmail_4:
-                                        Control: Classic/TextInput@2.3.2
-                                        Properties:
-                                          HintText: ="Email"
-                                    - txtContactAddress_4:
-                                        Control: Classic/TextInput@2.3.2
-                                        Properties:
-                                          Height: =60
-                                          HintText: ="Address"
-                                          Mode: =TextInputMode.Multiline
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =5
+                                          FillPortions: =1
+                                        Children:
+                                          - conSubRow_Name_4:
+                                              Control: GroupContainer@1.4.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =10
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                              Children:
+                                                - lblContactName_4:
+                                                    Control: Label@2.5.1
+                                                    Properties:
+                                                      Text: ="Name"
+                                                      Width: =80
+                                                      FontWeight: =FontWeight.Bold
+                                                - txtContactName_4:
+                                                    Control: Classic/TextInput@2.3.2
+                                                    Properties:
+                                                      FillPortions: =1
+                                          - conSubRow_Role_4:
+                                              Control: GroupContainer@1.4.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =10
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                              Children:
+                                                - lblContactRole_4:
+                                                    Control: Label@2.5.1
+                                                    Properties:
+                                                      Text: ="Role"
+                                                      Width: =80
+                                                      FontWeight: =FontWeight.Bold
+                                                - txtContactRole_4:
+                                                    Control: Classic/TextInput@2.3.2
+                                                    Properties:
+                                                      FillPortions: =1
+                                          - conSubRow_Phone_4:
+                                              Control: GroupContainer@1.4.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =10
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                              Children:
+                                                - lblContactPhone_4:
+                                                    Control: Label@2.5.1
+                                                    Properties:
+                                                      Text: ="Phone"
+                                                      Width: =80
+                                                      FontWeight: =FontWeight.Bold
+                                                - txtContactPhone_4:
+                                                    Control: Classic/TextInput@2.3.2
+                                                    Properties:
+                                                      FillPortions: =1
+                                          - conSubRow_Email_4:
+                                              Control: GroupContainer@1.4.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =10
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                              Children:
+                                                - lblContactEmail_4:
+                                                    Control: Label@2.5.1
+                                                    Properties:
+                                                      Text: ="Email"
+                                                      Width: =80
+                                                      FontWeight: =FontWeight.Bold
+                                                - txtContactEmail_4:
+                                                    Control: Classic/TextInput@2.3.2
+                                                    Properties:
+                                                      FillPortions: =1
+                                          - conSubRow_Address_4:
+                                              Control: GroupContainer@1.4.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =10
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
+                                              Children:
+                                                - lblContactAddress_4:
+                                                    Control: Label@2.5.1
+                                                    Properties:
+                                                      Text: ="Address"
+                                                      Width: =80
+                                                      FontWeight: =FontWeight.Bold
+                                                      VerticalAlign: =VerticalAlign.Top
+                                                - txtContactAddress_4:
+                                                    Control: Classic/TextInput@2.3.2
+                                                    Properties:
+                                                      Height: =60
+                                                      Mode: =TextInputMode.Multiline
+                                                      FillPortions: =1
                         - conSupplierRight_2:
                             Control: GroupContainer@1.4.0
                             Variant: AutoLayout
@@ -157,46 +246,80 @@ Screens:
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =15
                             Children:
-                              - lblABN_4:
-                                  Control: Label@2.5.1
+                              - conRow_ABN_4:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="ABN/ACN (if known)"
-                              - txtABN_4:
-                                  Control: Classic/TextInput@2.3.2
-                              - lblPreexisting_4:
-                                  Control: Label@2.5.1
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                  Children:
+                                    - lblABN_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          FontWeight: =FontWeight.Bold
+                                          Text: ="ABN/ACN (if known)"
+                                          Width: =225
+                                    - txtABN_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          FillPortions: =1
+                              - conRow_Preexisting_4:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="Relates to preexisting supplier? *"
-                              - radPreexisting_4:
-                                  Control: Radio@0.0.25
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                  Children:
+                                    - lblPreexisting_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          FontWeight: =FontWeight.Bold
+                                          Text: ="Relates to preexisting supplier? *"
+                                          Width: =225
+                                    - radPreexisting_4:
+                                        Control: Radio@0.0.25
+                                        Properties:
+                                          Items: =["Yes", "No"]
+                                          Layout: =Layout.Horizontal
+                                          FillPortions: =1
+                              - conRow_ContractDuration_4:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    Items: =["Yes", "No"]
-                                    Layout: =Layout.Horizontal
-                              - lblContractDuration_4:
-                                  Control: Label@2.5.1
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                  Children:
+                                    - lblContractDuration_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          FontWeight: =FontWeight.Bold
+                                          Text: ="Estimated contract duration *"
+                                          Width: =225
+                                    - txtContractDuration_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          FillPortions: =1
+                              - conRow_EstimatedSpend_4:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="Estimated contract duration *"
-                              - txtContractDuration_4:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                              - lblEstimatedSpend_4:
-                                  Control: Label@2.5.1
-                                  Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
-                                    FontWeight: =FontWeight.Bold
-                                    Text: ="Estimated Spend / Frequency"
-                              - txtEstimatedSpend_4:
-                                  Control: Classic/TextInput@2.3.2
-                                  Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                  Children:
+                                    - lblEstimatedSpend_4:
+                                        Control: Label@2.5.1
+                                        Properties:
+                                          FontWeight: =FontWeight.Bold
+                                          Text: ="Estimated Spend / Frequency"
+                                          Width: =225
+                                    - txtEstimatedSpend_4:
+                                        Control: Classic/TextInput@2.3.2
+                                        Properties:
+                                          FillPortions: =1
             - Footer_S2:
                 Control: GroupContainer@1.4.0
                 Variant: AutoLayout
