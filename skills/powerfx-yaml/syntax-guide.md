@@ -40,6 +40,7 @@ For advanced containers, use the explicit `Control` and `Variant` keys instead o
       Variant: AutoLayout
       Properties:
         LayoutDirection: =LayoutDirection.Vertical
+        PaddingTop: =20 # Use Padding*, not LayoutPadding*
     ```
 
 ## 4. Control Nesting
