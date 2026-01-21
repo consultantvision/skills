@@ -143,6 +143,19 @@ For complex forms where a main label covers multiple sub-fields (e.g., "Contact 
 
 ```
 
+### Grid Layouts (Galleries)
+
+For calendar or grid views, use `WrapCount` property on a `Gallery` control.
+
+```yaml
+- Gal_Grid:
+    Control: Gallery@2.15.0
+    Variant: Vertical
+    Properties:
+      WrapCount: =7
+      TemplateSize: =60
+```
+
 ## Control Types Reference
 
 ### Buttons & Navigation
