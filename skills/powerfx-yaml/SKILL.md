@@ -168,6 +168,21 @@ For calendar or grid views, use `WrapCount` property on a `Gallery` control.
       TemplateSize: =60
 ```
 
+## Styling Patterns
+
+### Dynamic Styling
+
+Use formulas for properties like `Fill` or `TemplateFill` to create reactive UIs. Remember to use block scalars if the formula is complex.
+
+```yaml
+TemplateFill: |-
+  =If(
+      ThisItem.IsSelected,
+      Color.LightBlue,
+      Color.White
+  )
+```
+
 ## Control Types Reference
 
 ### Buttons & Navigation
