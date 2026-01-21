@@ -66,6 +66,18 @@ Use a horizontal parent container with two vertical child containers, both set t
           Properties:
             LayoutDirection: =LayoutDirection.Vertical
             FillPortions: =1
+      - conRight:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
+          Properties:
+            LayoutDirection: =LayoutDirection.Vertical
+            FillPortions: =1
+            PaddingTop: =10
+            PaddingLeft: =10
+
+### Container Padding
+
+For `GroupContainer@1.4.0`, use `PaddingTop`, `PaddingBottom`, `PaddingLeft`, `PaddingRight`. Do NOT use `LayoutPadding...`.
 ```
 
 ### Fixed Height Headers/Dashboards
