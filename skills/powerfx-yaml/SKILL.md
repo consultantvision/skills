@@ -217,3 +217,4 @@ For complete, working screen examples demonstrating these patterns, see:
 * [Screen2_SupplierDetails_Refined.yaml](../../PowerFx%20Low%20code/Examples/Screen2_SupplierDetails_Refined.yaml)
 * [Screen3_Procurement_Refined.yaml](../../PowerFx%20Low%20code/Examples/Screen3_Procurement_Refined.yaml)
 * [DateRangeDescription.yaml](../../PowerFx%20Low%20code/Examples/DateRangeDescription.yaml)
+* [Calendar.yaml](../../PowerFx%20Low%20code/Examples/Calendar.yaml)
