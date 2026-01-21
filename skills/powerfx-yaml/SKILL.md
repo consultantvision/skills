@@ -166,6 +166,16 @@ For complex forms where a main label covers multiple sub-fields (e.g., "Contact 
       HintText: ="Enter Address"
       Mode: =TextInputMode.Multiline
       Height: =60
+
+### Date Pickers
+
+```yaml
+- datDate:
+    Control: Classic/DatePicker
+    Properties:
+      DefaultDate: =Today()
+```
+
 ```
 
 ### Radio & Selection
@@ -206,3 +216,4 @@ For complete, working screen examples demonstrating these patterns, see:
 * [Screen1_ServiceDetails_Refined.yaml](../../PowerFx%20Low%20code/Examples/Screen1_ServiceDetails_Refined.yaml)
 * [Screen2_SupplierDetails_Refined.yaml](../../PowerFx%20Low%20code/Examples/Screen2_SupplierDetails_Refined.yaml)
 * [Screen3_Procurement_Refined.yaml](../../PowerFx%20Low%20code/Examples/Screen3_Procurement_Refined.yaml)
+* [DateRangeDescription.yaml](../../PowerFx%20Low%20code/Examples/DateRangeDescription.yaml)
