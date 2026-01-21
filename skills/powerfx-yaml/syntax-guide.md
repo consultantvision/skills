@@ -36,7 +36,7 @@ For advanced containers, use the explicit `Control` and `Variant` keys instead o
 
     ```yaml
     MainContainer:
-      Control: GroupContainer@1.3.0
+      Control: GroupContainer@1.4.0
       Variant: AutoLayout
       Properties:
         LayoutDirection: =LayoutDirection.Vertical
