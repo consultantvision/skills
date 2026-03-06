@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "skills": {
+    "microsoft-foundry": {
+      "source": "microsoft/github-copilot-for-azure",
+      "sourceType": "github",
+      "computedHash": "070e1ef82bf613ab07ec47c1569d0e6683aed13f0937c6fc494119933b1d1bf4"
+    },
+    "pdf": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "computedHash": "37226d4220d844377e6b2a386c51a011df4cd130855ff0b80bcc22f9c28abd57"
+    },
+    "sql-expert": {
+      "source": "questfortech-investments/claude-code-skills",
+      "sourceType": "github",
+      "computedHash": "5fd1efe3690d43c9145a21ff49e3cd42fbb6879814205d431620adf2d2d49c17"
+    }
+  }
+}
