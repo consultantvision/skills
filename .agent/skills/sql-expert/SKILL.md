@@ -368,147 +368,48 @@ See `examples/migrations.sql` for more migration patterns.
 
 ## Advanced Patterns
 
-### UPSERT (Insert or Update)
-
-```sql
--- PostgreSQL
-INSERT INTO users (user_id, name, email, updated_at)
-VALUES (1, 'John Doe', 'john@example.com', NOW())
-ON CONFLICT (user_id)
-DO UPDATE SET
-    name = EXCLUDED.name,
-    email = EXCLUDED.email,
-    updated_at = NOW();
-
--- MySQL
-INSERT INTO users (user_id, name, email, updated_at)
-VALUES (1, 'John Doe', 'john@example.com', NOW())
-ON DUPLICATE KEY UPDATE
-    name = VALUES(name),
-    email = VALUES(email),
-    updated_at = NOW();
-```
-
-### Recursive CTEs
-
-```sql
--- Hierarchical data traversal
-WITH RECURSIVE employee_hierarchy AS (
-    -- Anchor: top-level employees
-    SELECT id, name, manager_id, 1 as level
-    FROM employees
-    WHERE manager_id IS NULL
-
-    UNION ALL
-
-    -- Recursive: employees reporting to previous level
-    SELECT e.id, e.name, e.manager_id, eh.level + 1
-    FROM employees e
-    INNER JOIN employee_hierarchy eh ON e.manager_id = eh.id
-)
-SELECT * FROM employee_hierarchy ORDER BY level, name;
-```
-
-For more advanced patterns including pivot tables, JSON operations, and bulk operations, see `references/advanced-patterns.md`.
+For UPSERT, recursive CTEs, pivot tables, JSON operations, and bulk operations, see `references/advanced-patterns.md`.
 
 ---
 
 ## Best Practices
 
-### Critical Guidelines
+For comprehensive best practices, see `references/best-practices.md`. Key guidelines:
 
 1. **Always use parameterized queries** to prevent SQL injection
 2. **Use transactions for related operations** to ensure atomicity
 3. **Add appropriate constraints** (PRIMARY KEY, FOREIGN KEY, NOT NULL, CHECK)
 4. **Include timestamps** (created_at, updated_at) on tables
-5. **Use meaningful names** for tables and columns
-6. **Avoid SELECT *** - specify only needed columns
-7. **Index foreign keys** for join performance
-8. **Use VARCHAR instead of CHAR** for variable-length strings
-9. **Handle NULL values properly** with IS NULL / IS NOT NULL
-10. **Use appropriate data types** (DECIMAL for money, not FLOAT)
-
-Example with multiple best practices:
-
-```sql
-CREATE TABLE orders (
-    order_id INT PRIMARY KEY,
-    user_id INT NOT NULL,
-    order_date DATE NOT NULL DEFAULT CURRENT_DATE,
-    total_amount DECIMAL(10, 2) CHECK (total_amount >= 0),
-    status VARCHAR(20) CHECK (status IN ('pending', 'completed', 'cancelled')),
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
-CREATE INDEX idx_orders_user_id ON orders(user_id);
-CREATE INDEX idx_orders_status ON orders(status);
-```
-
-For comprehensive best practices, see `references/best-practices.md`.
+5. **Avoid SELECT *** - specify only needed columns
+6. **Index foreign keys** for join performance
+7. **Use appropriate data types** (DECIMAL for money, not FLOAT)
 
 ---
 
 ## Common Pitfalls
 
-Watch out for these frequent issues:
+For a complete list of pitfalls and solutions, see `references/common-pitfalls.md`. Watch for:
 
 1. **N+1 Query Problem** - Use JOINs instead of loops with queries
-2. **Not using LIMIT** for exploratory queries on large tables
-3. **Implicit type conversions** preventing index usage
-4. **Using COUNT(*) when EXISTS is sufficient**
-5. **Not handling NULLs properly** (NULL = NULL is always NULL, not TRUE)
-6. **Using SELECT DISTINCT** as a band-aid instead of fixing the query
-7. **Forgetting transactions** for related operations
-8. **Using functions on indexed columns** preventing index usage
-
-Example - Avoiding N+1:
-
-```python
-# BAD: N+1 queries
-users = db.query("SELECT * FROM users")
-for user in users:
-    orders = db.query("SELECT * FROM orders WHERE user_id = ?", user.id)
-
-# GOOD: Single query with JOIN
-result = db.query("""
-    SELECT users.*, orders.*
-    FROM users
-    LEFT JOIN orders ON users.id = orders.user_id
-""")
-```
-
-For a complete list of pitfalls and solutions, see `references/common-pitfalls.md`.
+2. **Implicit type conversions** preventing index usage
+3. **Not handling NULLs properly** (NULL = NULL is always NULL, not TRUE)
+4. **Using SELECT DISTINCT** as a band-aid instead of fixing the query
+5. **Using functions on indexed columns** preventing index usage
 
 ---
 
-## Helper Scripts and Examples
+## Additional Resources
 
-### Available Resources
+**Scripts**: `scripts/sql_helper.py` - Query building, schema introspection, index analysis, migration helpers
 
-**Helper Scripts** (`scripts/`):
-- `sql_helper.py` - Utility functions for query building, schema introspection, index analysis, and migration helpers
-
-**Examples** (`examples/`):
-- `complex_queries.sql` - Advanced query patterns with CTEs, window functions, and subqueries
-- `schema_examples.sql` - Complete schema design examples for various use cases
-- `migrations.sql` - Safe migration patterns and zero-downtime techniques
+**Examples** (`examples/`): `complex_queries.sql`, `schema_examples.sql`, `migrations.sql`
 
 **References** (`references/`):
-- `query-optimization.md` - Comprehensive query optimization techniques and EXPLAIN analysis
-- `indexes-performance.md` - Detailed index strategies, maintenance, and monitoring
-- `advanced-patterns.md` - UPSERT, bulk operations, pivot tables, JSON operations, recursive queries
-- `best-practices.md` - Complete SQL best practices guide
-- `common-pitfalls.md` - Common mistakes and how to avoid them
-
-### Quick Start
-
-1. For basic queries, use the patterns shown above
-2. For optimization, start with EXPLAIN and check `references/query-optimization.md`
-3. For schema design, review normalization patterns and see `examples/schema_examples.sql`
-4. For complex scenarios, check `references/advanced-patterns.md`
-5. For utilities, use `scripts/sql_helper.py`
+- `query-optimization.md` - EXPLAIN analysis and optimization techniques
+- `indexes-performance.md` - Index strategies and monitoring
+- `advanced-patterns.md` - UPSERT, bulk ops, pivot tables, JSON, recursive queries
+- `best-practices.md` - Complete best practices guide
+- `common-pitfalls.md` - Common mistakes and solutions
 
 ---
 

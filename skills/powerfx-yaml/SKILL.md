@@ -74,11 +74,11 @@ Use a horizontal parent container with two vertical child containers, both set t
             FillPortions: =1
             PaddingTop: =10
             PaddingLeft: =10
+```
 
 ### Container Padding
 
 For `GroupContainer@1.4.0`, use `PaddingTop`, `PaddingBottom`, `PaddingLeft`, `PaddingRight`. Do NOT use `LayoutPadding...`.
-```
 
 ### Fixed Height Headers/Dashboards
 
@@ -92,6 +92,7 @@ Use `LayoutMinHeight` and `LayoutMaxHeight` to enforce fixed sizes in auto-layou
       LayoutDirection: =LayoutDirection.Vertical
       LayoutMinHeight: =50
       LayoutMaxHeight: =120
+```
 
 ### Horizontal Field Row (Side-by-Side Label & Input)
 
@@ -153,8 +154,6 @@ For complex forms where a main label covers multiple sub-fields (e.g., "Contact 
                   FillPortions: =1
 ```
 
-```
-
 ### Grid Layouts (Galleries)
 
 For calendar or grid views, use `WrapCount` property on a `Gallery` control.
@@ -206,6 +205,7 @@ TemplateFill: |-
       HintText: ="Enter Address"
       Mode: =TextInputMode.Multiline
       Height: =60
+```
 
 ### Date Pickers
 
@@ -214,8 +214,6 @@ TemplateFill: |-
     Control: Classic/DatePicker
     Properties:
       DefaultDate: =Today()
-```
-
 ```
 
 ### Radio & Selection
